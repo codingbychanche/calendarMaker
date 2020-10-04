@@ -9,7 +9,7 @@ import CalendarMaker.*;
 /**
  * Demo
  * 
- * Parses a textfile and converts it into a calender entry....
+ * Parses a text- file and converts it into a calendar entry....
  * 
  * @author Berthold
  */
