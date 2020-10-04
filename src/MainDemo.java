@@ -16,10 +16,19 @@ import CalendarMaker.*;
 
 public class MainDemo {
 
+	static String path;
+	
 	public static void main(String args[]) {
+		
+		if (args.length>0) {
+			path=args[0];
+		} else {
+			System.out.println("Not path/ filename.... Abbording.");
+			return;
+		}
 
 		List<CalendarEntry> calendar = new ArrayList();
-		MakeCalendar myCalendar = new MakeCalendar("./bin/epl.txt");
+		MakeCalendar myCalendar = new MakeCalendar(path);
 
 		calendar = myCalendar.getRawCalendar();
 
