@@ -17,11 +17,11 @@ import CalendarMaker.*;
 public class MainDemo {
 
 	static String path;
-	
+
 	public static void main(String args[]) {
-		
-		if (args.length>0) {
-			path=args[0];
+
+		if (args.length > 0) {
+			path = args[0];
 		} else {
 			System.out.println("Not path/ filename.... Abbording.");
 			return;
@@ -41,19 +41,25 @@ public class MainDemo {
 		} else {
 			for (CalendarEntry e : calendar) {
 				String date = e.getDate();
+				String time = e.getTime();
 				String courseNumber = e.getCourseNumber();
 				String vagNumber = e.getVagNumber();
 				String location = e.getLocation();
 				String holiday = e.getHoliday();
 				String type = e.getType();
+				String day = e.getDay();
+				String month = e.getMonth();
+				String year = e.getYear();
+				String sourceLine = e.getOrgiriginalEntry();
 
-				String line = date + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday + "   "
-						+ type;
+				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  " + time + "  "
+						+ courseNumber + "  " + vagNumber + "  " + location + "  " + holiday + "   " + type + "\n"
+						+ sourceLine + "\n";
 
 				if (e.isValidEntry)
 					System.out.println(line);
 			}
-		
+
 		}
 	}
 }

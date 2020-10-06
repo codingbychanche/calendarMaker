@@ -33,12 +33,14 @@ public class MakeCalendar {
 	// Patterns
 	//
 	Pattern datumPattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
-	Pattern courseNumberPattern = Pattern.compile("(((?i)[a-z\\?]){2}\\d{4})");
+	Pattern courseNumberPattern = Pattern.compile("(((?i)[a-z]){2}\\d{4})");
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
-	Pattern timePattern = Pattern.compile("(\\d{1,2}(.)\\d{1,2})(!=.)");
+	
+	//Pattern timePattern = Pattern.compile("\\|\\s?(\\d{1,2})\\.(\\d{1,2})\\|");
+	Pattern timePattern = Pattern.compile("(\\|\\s?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
 	Pattern locationPattern = Pattern.compile(
-			"(?i)" + "(Karlsruhe)|" + "(München)|" + "(Hannover)|" + "(Berlin)|" + "(Freiburg)|" + "(Wuppertal)");
+			"(?i)(Karlsruhe)|(München)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)");
 
 	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
 	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
@@ -47,9 +49,9 @@ public class MakeCalendar {
 	// Result
 	//
 	static final boolean IS_VALID_ENTRY = true;
-	static final boolean IS_UNVALID_ENTRY = false;
-	String foundDate, foundVagNumber, foundCourseNumber, foundLocation, foundHoliday, foundType;
-	boolean hasDate, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasType;
+	static final boolean IS_INVALID_ENTRY = false;
+	String foundDate, foundTime, foundVagNumber, foundCourseNumber, foundLocation, foundHoliday, foundType;
+	boolean hasDate, hasTime, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasType;
 
 	//
 	// Error
@@ -58,12 +60,11 @@ public class MakeCalendar {
 	String errorDescription;
 
 	/**
-	 * Reads the source file containing the entry's, extracts them by pasing
-	 * line by line and creates a new entry for this calendar.
+	 * Reads the source file containing the calendar entry's and extracts them
+	 * by parsing line by line and creates a new entry for this calendar.
 	 * <p>
-	 * 
 	 * If a line contains at least a date, it is marked as a valid entry. if
-	 * not, it is marked as not valid.
+	 * not, it is marked as invalid.
 	 * 
 	 */
 	public MakeCalendar(String path) {
@@ -71,28 +72,34 @@ public class MakeCalendar {
 		// Read file line by line
 		//
 		hasError = false;
-		
-		totalNumberOfLines=getNumberOfLines(path);
+
+		totalNumberOfLines = getNumberOfLines(path);
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 
 			Matcher matcher;
-			
+
 			while ((lineRead = br.readLine()) != null) {
 
 				//
 				// Check line read for entrys that form a valid calendar entry
 				//
-				matcher = datumPattern.matcher(lineRead);
-				hasDate = hasVagNumber = hasCourseNumber = hasLocation = hasHoliday = hasType = false;
-				foundDate = foundCourseNumber = foundVagNumber = foundLocation = foundHoliday = foundType = "-";
+				hasDate = hasTime = hasVagNumber = hasCourseNumber = hasLocation = hasHoliday = hasType = false;
+				foundDate = foundTime = foundCourseNumber = foundVagNumber = foundLocation = foundHoliday = foundType = "-";
 
+				matcher = datumPattern.matcher(lineRead);
 				while (matcher.find()) {
 					// This is the line containing the search pattern
 					foundDate = matcher.group(0);
 					hasDate = true;
 				}
+
+				matcher = timePattern.matcher(lineRead);
+				while (matcher.find()) {  // start time
+					foundTime = matcher.group(0);
+				}
+				
 
 				matcher = courseNumberPattern.matcher(lineRead);
 				while (matcher.find()) {
@@ -134,7 +141,7 @@ public class MakeCalendar {
 				// and create a calendar entry.
 				//
 				if (hasDate && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
-					CalendarEntry calendarEntry = new CalendarEntry(true, foundDate, foundType,
+					CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, foundDate, foundTime, foundType,
 							foundCourseNumber, foundVagNumber, foundLocation, foundHoliday, lineRead);
 					this.addEntry(calendarEntry);
 					numberOfLinesValid++;
@@ -144,7 +151,7 @@ public class MakeCalendar {
 					// calendar entry, but, you'll never know.
 					// Store line, let the user decide...
 					//
-					CalendarEntry calendarEntry = new CalendarEntry(false, foundDate, foundType,
+					CalendarEntry calendarEntry = new CalendarEntry(IS_INVALID_ENTRY, foundDate, foundTime, foundType,
 							foundCourseNumber, foundVagNumber, foundLocation, foundHoliday, lineRead);
 					this.addEntry(calendarEntry);
 					numberOfLinesNotValid++;
@@ -167,28 +174,43 @@ public class MakeCalendar {
 		calendarEntrys.add(clendarEntry);
 	}
 
+	/**
+	 * @return Number of lines which represent a valid calendar entry.
+	 */
 	public int getNumberOfLinesValid() {
 		return numberOfLinesValid;
 	}
 
+	/**
+	 * @return Number of lines which represent an invalid calendar entry.
+	 */
 	public int getNumberOfLinesNotValid() {
 		return numberOfLinesNotValid;
 	}
 
+	/**
+	 * @return Total number of lines
+	 */
 	public int getTotalNumberOfLinesRead() {
 		return totalNumberOfLines;
 	}
 
+	/**
+	 * @return True, if calender could not be read from the filesystem.
+	 */
 	public boolean hasError() {
 		return hasError;
 	}
-	
-	public String getErorrDescription (){
+
+	/**
+	 * @return Description of the file i/o error.
+	 */
+	public String getErorrDescription() {
 		return errorDescription;
 	}
 
 	/**
-	 * @return The calendar created containing all valid and unvalid entry's as
+	 * @return The calendar created containing all valid and invalid entry's in
 	 *         raw text.
 	 */
 	public List<CalendarEntry> getRawCalendar() {
@@ -211,8 +233,8 @@ public class MakeCalendar {
 				lines++;
 			br.close();
 		} catch (Exception e) {
-			hasError=true;
-			errorDescription=e.toString();
+			hasError = true;
+			errorDescription = e.toString();
 		}
 		return lines;
 	}
