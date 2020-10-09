@@ -90,7 +90,6 @@ public class MakeCalendar {
 
 				matcher = datumPattern.matcher(lineRead);
 				while (matcher.find()) {
-					// This is the line containing the search pattern
 					foundDate = matcher.group(0);
 					hasDate = true;
 				}
@@ -103,35 +102,30 @@ public class MakeCalendar {
 
 				matcher = courseNumberPattern.matcher(lineRead);
 				while (matcher.find()) {
-					// This is the line containing the search pattern
 					foundCourseNumber = matcher.group(0);
 					hasCourseNumber = true;
 				}
 
 				matcher = vagNumberPattern.matcher(lineRead);
 				while (matcher.find()) {
-					// This is the line containing the search pattern
 					foundVagNumber = matcher.group(0);
 					hasVagNumber = true;
 				}
 
 				matcher = locationPattern.matcher(lineRead);
 				while (matcher.find()) {
-					// This is the line containing the search pattern
 					foundLocation = matcher.group(0);
 					hasLocation = true;
 				}
 
 				matcher = holidayPattern.matcher(lineRead);
 				while (matcher.find()) {
-					// This is the line containing the search pattern
 					foundHoliday = matcher.group(0);
 					hasHoliday = true;
 				}
 
 				matcher = typePattern.matcher(lineRead);
 				while (matcher.find()) {
-					// This is the line containing the search pattern
 					foundType = matcher.group(0);
 					hasType = true;
 				}
