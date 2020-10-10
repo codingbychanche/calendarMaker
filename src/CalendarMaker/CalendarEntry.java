@@ -179,7 +179,6 @@ public class CalendarEntry {
 	 * @return End time of Event in hh.mm
 	 */
 	public String getEndTime() {
-
 		String t = time.replace("|", " ").trim();
 		String[] tParts = t.split(" ");
 		
