@@ -41,7 +41,8 @@ public class MainDemo {
 		} else {
 			for (CalendarEntry e : calendar) {
 				String date = e.getDate();
-				String time = e.getTime();
+				String startTime = e.getStartTime();
+				String endTime=e.getEndTime();
 				String courseNumber = e.getCourseNumber();
 				String vagNumber = e.getVagNumber();
 				String location = e.getLocation();
@@ -52,7 +53,15 @@ public class MainDemo {
 				String year = e.getYear();
 				String sourceLine = e.getOrgiriginalEntry();
 
-				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  " + time + "  "
+				String startH=e.getStartTimeHours();
+				String startM=e.getStartTimeMinutes();
+				System.out.print("Start h:"+startH+"   StartM:"+startM);
+				
+				String endH=e.getEndTimeHours();
+				String endM=e.getEndTimeMinutes();
+				System.out.println("       End h:"+endH+"   EndM:"+endM);
+				
+				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime + " End:"+endTime+"  "
 						+ courseNumber + "  " + vagNumber + "  " + location + "  " + holiday + "   " + type + "\n"
 						+ sourceLine + "\n";
 

@@ -64,6 +64,10 @@ public class CalendarEntry {
 	public String getDate() {
 		return date;
 	}
+	
+	public String getTime() {
+		return time;
+	}
 
 	public String getType() {
 		return type;
@@ -85,13 +89,13 @@ public class CalendarEntry {
 		return holiday;
 	}
 
-	public String getOrgiriginalEntry() {
+	public String getOriginalEntry() {
 		return orgiriginalEntry;
 	}
 
 	/**
 	 * Extracts day of month from a date string object. Date- string format:
-	 * dd.mm.yyyy
+	 * 09.20.2020
 	 * 
 	 * @return Day of month if date was in the correct format. Returns "-" if
 	 *         not.
@@ -105,7 +109,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Extracts month from a date string object. Date- string format: dd.mm.yyyy
+	 * Extracts month from a date string object. Date- string format: 09.20.2020
 	 * 
 	 * @return Month if date was in the correct format. Returns "-" if not.
 	 */
@@ -118,7 +122,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Extracts year from a date string object. Date- string format: dd.mm.yyyy
+	 * Extracts year from a date string object. Date- string format: 09.20.2020
 	 * 
 	 * @return Year if date was in the correct format. Returns "-" if not.
 	 */
@@ -127,91 +131,6 @@ public class CalendarEntry {
 		if (d.length > 2)
 			return d[2];
 		else
-			return "-";
-	}
-
-	/**
-	 * Asumes that the format of the time string is: |hh.mm|hh.mm|
-	 * 
-	 * @return Start time of event in: hh.mm
-	 */
-	public String getStartTime() {
-
-		String t = time.replace("|", " ").trim();
-		String[] tParts = t.split(" ");
-		System.out.println(t);
-
-		if (tParts.length >0)
-			return tParts[0];
-		else
-			return "_";
-	}
-	
-	/**
-	 * Asumes that the format of the time-string is hh.mm
-	 * 
-	 * @return Start time of he event in full hours.
-	 */
-	public String getStartTimeHours(){
-		String h[]=this.getStartTime().split("\\.");
-		if (h.length>0)
-			return h[0];
-		else 
-			return "-";
-	}
-	
-	/**
-	 * Asumes that the format of the time-string is hh.mm
-	 * 
-	 * @return End time of he event in minutes.
-	 */
-	public String getStartTimeMinutes(){
-		String h[]=this.getStartTime().split("\\.");
-		if (h.length>1)
-			return h[1];
-		else 
-			return "-";
-	}
-
-	/**
-	 * Asumes that the format of the time string is: |hh.mm|hh.mm|
-	 * 
-	 * @return End time of Event in hh.mm
-	 */
-	public String getEndTime() {
-
-		String t = time.replace("|", " ").trim();
-		String[] tParts = t.split(" ");
-		
-		if (tParts.length ==2)
-			return tParts[1];
-		else
-			return "_";
-	}
-	
-	/**
-	 * Asumes that the format of the time-string is hh.mm
-	 * 
-	 * @return End time of he event in full hours.
-	 */
-	public String getEndTimeHours(){
-		String h[]=this.getEndTime().split("\\.");
-		if (h.length>0)
-			return h[0];
-		else 
-			return "-";
-	}
-	
-	/**
-	 * Asumes that the format of the time-string is hh.mm
-	 * 
-	 * @return End time of he event in minutes.
-	 */
-	public String getEndTimeMinutes(){
-		String h[]=this.getEndTime().split("\\.");
-		if (h.length>1)
-			return h[1];
-		else 
 			return "-";
 	}
 }
