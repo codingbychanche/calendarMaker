@@ -42,28 +42,28 @@ public class MainDemo {
 			for (CalendarEntry e : calendar) {
 				String date = e.getDate();
 				String startTime = e.getStartTime();
-				String endTime=e.getEndTime();
+				String endTime = e.getEndTime();
 				String courseNumber = e.getCourseNumber();
 				String vagNumber = e.getVagNumber();
 				String location = e.getLocation();
 				String holiday = e.getHoliday();
 				String type = e.getType();
-				String day = e.getDay();
-				String month = e.getMonth();
-				String year = e.getYear();
+				int day = e.getDay();
+				int month = e.getMonth();
+				int year = e.getYear();
 				String sourceLine = e.getOrgiriginalEntry();
 
-				String startH=e.getStartTimeHours();
-				String startM=e.getStartTimeMinutes();
-				System.out.print("Start h:"+startH+"   StartM:"+startM);
-				
-				String endH=e.getEndTimeHours();
-				String endM=e.getEndTimeMinutes();
-				System.out.println("       End h:"+endH+"   EndM:"+endM);
-				
-				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime + " End:"+endTime+"  "
-						+ courseNumber + "  " + vagNumber + "  " + location + "  " + holiday + "   " + type + "\n"
-						+ sourceLine + "\n";
+				int startH = e.getStartTimeHours();
+				int startM = e.getStartTimeMinutes();
+				System.out.print("Start h:" + startH + "   StartM:" + startM);
+
+				int endH = e.getEndTimeHours();
+				int endM = e.getEndTimeMinutes();
+				System.out.println("       End h:" + endH + "   EndM:" + endM);
+
+				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime
+						+ " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday
+						+ "   " + type + "\n" + sourceLine + "\n";
 
 				if (e.isValidEntry)
 					System.out.println(line);

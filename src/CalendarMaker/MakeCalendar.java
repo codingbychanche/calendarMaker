@@ -37,7 +37,7 @@ public class MakeCalendar {
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
 	
 	//Pattern timePattern = Pattern.compile("\\|\\s?(\\d{1,2})\\.(\\d{1,2})\\|");
-	Pattern timePattern = Pattern.compile("(\\|\\s?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
+	Pattern timePattern = Pattern.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
 	Pattern locationPattern = Pattern.compile(
 			"(?i)(Karlsruhe)|(München)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)");

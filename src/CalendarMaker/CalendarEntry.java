@@ -93,41 +93,56 @@ public class CalendarEntry {
 	 * Extracts day of month from a date string object. Date- string format:
 	 * dd.mm.yyyy
 	 * 
-	 * @return Day of month if date was in the correct format. Returns "-" if
-	 *         not.
+	 * @return Day of month if date was in the correct format. Returns 0 if not.
 	 */
-	public String getDay() {
+	public int getDay() {
+
 		String[] d = date.split("\\.");
-		if (d.length > 0)
-			return d[0];
-		else
-			return "-";
+
+		try {
+			if (d.length > 0)
+				return Integer.valueOf(d[0]);
+			else
+				return 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 
 	/**
 	 * Extracts month from a date string object. Date- string format: dd.mm.yyyy
 	 * 
-	 * @return Month if date was in the correct format. Returns "-" if not.
+	 * @return Month if date was in the correct format. Returns 0 if not.
 	 */
-	public String getMonth() {
+	public int getMonth() {
 		String[] d = date.split("\\.");
-		if (d.length > 1)
-			return d[1];
-		else
-			return "-";
+
+		try {
+			if (d.length > 1)
+				return Integer.valueOf(d[1]);
+			else
+				return 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 
 	/**
 	 * Extracts year from a date string object. Date- string format: dd.mm.yyyy
 	 * 
-	 * @return Year if date was in the correct format. Returns "-" if not.
+	 * @return Year if date was in the correct format. Returns 0 if not.
 	 */
-	public String getYear() {
+	public int getYear() {
 		String[] d = date.split("\\.");
-		if (d.length > 2)
-			return d[2];
-		else
-			return "-";
+
+		try {
+			if (d.length > 2)
+				return Integer.valueOf(d[2]);
+			else
+				return 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 
 	/**
@@ -138,39 +153,55 @@ public class CalendarEntry {
 	public String getStartTime() {
 
 		String t = time.replace("|", " ").trim();
+		t = t.replace("_", "");
 		String[] tParts = t.split(" ");
 		System.out.println(t);
 
-		if (tParts.length >0)
+		if (tParts.length > 0)
 			return tParts[0];
 		else
 			return "_";
 	}
-	
+
 	/**
 	 * Asumes that the format of the time-string is hh.mm
 	 * 
-	 * @return Start time of he event in full hours.
+	 * @return Start time of he event in full hours. If time format is not
+	 *         valid, returns 0.
 	 */
-	public String getStartTimeHours(){
-		String h[]=this.getStartTime().split("\\.");
-		if (h.length>0)
-			return h[0];
-		else 
-			return "-";
+	public int getStartTimeHours() {
+		String h[] = this.getStartTime().split("\\.");
+		String hr;
+
+		try {
+			if (h.length > 0) {
+				hr = h[0].replace("_", "");
+				return Integer.valueOf(hr);
+			} else
+				return 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
-	
+
 	/**
 	 * Asumes that the format of the time-string is hh.mm
 	 * 
-	 * @return End time of he event in minutes.
+	 * @return Start time of he event in minutes. If time format is not valid,
+	 *         returns 0.
 	 */
-	public String getStartTimeMinutes(){
-		String h[]=this.getStartTime().split("\\.");
-		if (h.length>1)
-			return h[1];
-		else 
-			return "-";
+	public int getStartTimeMinutes() {
+		String m[] = this.getStartTime().split("\\.");
+		String mi;
+		try {
+			if (m.length > 1) {
+				mi = m[1].replace("_", "");
+				return Integer.valueOf(mi);
+			} else
+				return 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 
 	/**
@@ -181,36 +212,52 @@ public class CalendarEntry {
 	public String getEndTime() {
 		String t = time.replace("|", " ").trim();
 		String[] tParts = t.split(" ");
-		
-		if (tParts.length ==2)
+
+		if (tParts.length == 2)
 			return tParts[1];
 		else
 			return "_";
 	}
-	
+
 	/**
 	 * Asumes that the format of the time-string is hh.mm
 	 * 
-	 * @return End time of he event in full hours.
+	 * @return End time of he event in full hours. If time format is not valid,
+	 *         returns 0.
 	 */
-	public String getEndTimeHours(){
-		String h[]=this.getEndTime().split("\\.");
-		if (h.length>0)
-			return h[0];
-		else 
-			return "-";
+	public int getEndTimeHours() {
+		String h[] = this.getEndTime().split("\\.");
+		String hr;
+
+		try {
+			if (h.length > 0) {
+				hr = h[0].replace("_", "");
+				return Integer.valueOf(hr);
+			} else
+				return 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
-	
+
 	/**
 	 * Asumes that the format of the time-string is hh.mm
 	 * 
-	 * @return End time of he event in minutes.
+	 * @return End time of he event in minutes. If time format is not valid,
+	 *         returns 0.
 	 */
-	public String getEndTimeMinutes(){
-		String h[]=this.getEndTime().split("\\.");
-		if (h.length>1)
-			return h[1];
-		else 
-			return "-";
+	public int getEndTimeMinutes() {
+		String m[] = this.getEndTime().split("\\.");
+		String mi;
+
+		try {
+			if (m.length > 1) {
+				mi = m[1].replace("_", "");
+				return Integer.valueOf(mi);
+			} else
+				return 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 }
