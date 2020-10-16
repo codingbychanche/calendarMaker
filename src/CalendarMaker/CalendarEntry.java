@@ -1,5 +1,7 @@
 package CalendarMaker;
 
+import java.util.Calendar;
+
 /**
  * Data model for one calendar entry.
  * 
@@ -241,7 +243,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Asumes that the format of the time-string is hh.mm
+	 * Assumes that the format of the time-string is hh.mm
 	 * 
 	 * @return End time of he event in minutes. If time format is not valid,
 	 *         returns 0.
@@ -259,5 +261,21 @@ public class CalendarEntry {
 		} catch (NumberFormatException e) {
 			return 0;
 		}
+	}
+	
+	/**
+	 * This events date in milliseconds. Precision: Day (=0:00 until 24:00h)
+	 * 
+	 * @return This events date in milliseconds.
+	 */
+	public long getEventTimeInMillisec() {
+
+        int year = this.getYear();
+        int month = this.getMonth();
+        int day = this.getDay();
+
+        Calendar currentEventTime=Calendar.getInstance();
+        currentEventTime.set(year+2000, month-1, day,0, 23);
+        return currentEventTime.getTimeInMillis();
 	}
 }
