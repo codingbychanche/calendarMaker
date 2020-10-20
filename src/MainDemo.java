@@ -60,6 +60,7 @@ public class MainDemo {
 				int endH = e.getEndTimeHours();
 				int endM = e.getEndTimeMinutes();
 				System.out.println("       End h:" + endH + "   EndM:" + endM);
+				System.out.println("Day of week"+e.getDayOfWeek());
 
 				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime
 						+ " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday

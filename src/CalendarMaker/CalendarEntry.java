@@ -276,4 +276,19 @@ public class CalendarEntry {
         currentEventTime.set(year+2000, month-1, day,0, 23);
         return currentEventTime.getTimeInMillis();
 	}
+	/**
+	 * Day of week.
+	 * 
+	 * @return Integer idicating the day of week.
+	 */
+	public int getDayOfWeekForThisDate(){
+		int year = this.getYear();
+        int month = this.getMonth();
+        int day = this.getDay();
+        
+		Calendar currentEventTime=Calendar.getInstance();
+        currentEventTime.set(year+2000, month-1, day);
+        
+        return currentEventTime.get(Calendar.DAY_OF_WEEK);
+	}
 }
