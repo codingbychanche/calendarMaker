@@ -2,6 +2,7 @@ package CalendarMaker;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,7 +20,7 @@ public class MakeCalendar {
 	//
 	// This calendars entry's
 	//
-	List<CalendarEntry> calendarEntrys = new ArrayList();
+	List<CalendarEntry> calendarEntrys = new ArrayList<CalendarEntry>();
 
 	//
 	// File
@@ -36,11 +37,10 @@ public class MakeCalendar {
 	Pattern courseNumberPattern = Pattern.compile("(((?i)[a-z]){2}\\d{4})");
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
 	
-	//Pattern timePattern = Pattern.compile("\\|\\s?(\\d{1,2})\\.(\\d{1,2})\\|");
 	Pattern timePattern = Pattern.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
 	Pattern locationPattern = Pattern.compile(
-			"(?i)(Karlsruhe)|(München)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)");
+			"(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbrücken)|(Ludwigsburg)");
 
 	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
 	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");

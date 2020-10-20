@@ -9,9 +9,7 @@ package CalendarMaker;
 
 public class CalendarEntry {
 
-	public boolean isValidEntry; // Must have at least date and course number or
-									// VAG
-	// number
+	public boolean isValidEntry; 
 	String date;
 	String time;
 	String type; // eq,uv etc
@@ -24,7 +22,7 @@ public class CalendarEntry {
 	/**
 	 * Creates a new entry for a {@link CalendarMaker} instance.
 	 * 
-	 * @param isValidENtry
+	 * @param isValidEntry
 	 *            Must have date and course number or vag number.
 	 * @param date
 	 *            Day....
