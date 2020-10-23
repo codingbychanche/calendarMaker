@@ -1,58 +1,51 @@
 package CalendarMaker;
+
 /**
- * Searces german "umlaut" in an ascii- string. Found "umlaut's" will
- * be converted to theit HTML- equivialent.</p>
- * 
- *  Such strings can be displayed correctly inside of a html- view.
+ * Class helping to convert German umlauts.
  * 
  * @author Berthold
  *
  */
 public class ConvertUmlaut {
-	private static String testString;
-	
+
 	/**
+	 * Converts umlauts to their html- equivalent.
 	 * 
-	 * @param args
+	 * @param suspectedUmlautString String suspected containing German umlauts
+	 * @return String containing html- equivalent of the umlauts found.
 	 */
-	public static void main(String args []){
-		testString="Hallo äüöÄÖÜ";
-		
-		char array[]=testString.toCharArray();
-		
-		for (char b:array)
-			System.out.println(b+"    "+(int)b);
-		
-		
-		StringBuilder umlString=new StringBuilder();
-		
-		for (char b:array){
-			switch (b){
-				case 228:
+	public static String toHtml(String suspectedUmlautString) {
+
+		StringBuilder umlString = new StringBuilder();
+		char array[] = suspectedUmlautString.toCharArray();
+
+		for (char suspectedUmlaut : array) {
+			switch (suspectedUmlaut) {
+			case 228:
 				umlString.append("&auml");
 				break;
-				case 252:
-					umlString.append("&uuml");
-					break;
-				case 246:
-					umlString.append("&ouml");
-					break;
-					
-				case 196:
-					umlString.append("&Auml");
-					break;
-					case 214:
-						umlString.append("&Ouml");
-						break;
-					case 220:
-						umlString.append("&Uuml");
-						break;
-					
-					default:
-						umlString.append(b);
-						break;
+			case 252:
+				umlString.append("&uuml");
+				break;
+			case 246:
+				umlString.append("&ouml");
+				break;
+
+			case 196:
+				umlString.append("&Auml");
+				break;
+			case 214:
+				umlString.append("&Ouml");
+				break;
+			case 220:
+				umlString.append("&Uuml");
+				break;
+
+			default:
+				umlString.append(suspectedUmlaut);
+				break;
 			}
 		}
-		System.out.println(umlString);
+		return umlString.toString();
 	}
 }
