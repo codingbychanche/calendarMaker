@@ -34,13 +34,14 @@ public class MakeCalendar {
 	// Patterns
 	//
 	Pattern datumPattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
-	Pattern courseNumberPattern = Pattern.compile("(((?i)[a-z]){2}\\d{4})");
+	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
 	
 	Pattern timePattern = Pattern.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
 	Pattern locationPattern = Pattern.compile(
-			"(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbrücken)|(Ludwigsburg)");
+			"(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)|"
+			+ "(Witten)|(Fulda)");
 
 	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
 	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
@@ -60,12 +61,9 @@ public class MakeCalendar {
 	String errorDescription;
 
 	/**
-	 * Reads the source file containing the calendar entry's and extracts them
+	 * Reads the source file containing the calendar entry's, extracts them
 	 * by parsing line by line and creates a new entry for this calendar.
-	 * <p>
-	 * If a line contains at least a date, it is marked as a valid entry. if
-	 * not, it is marked as invalid.
-	 * 
+	 *
 	 */
 	public MakeCalendar(String path) {
 		//
