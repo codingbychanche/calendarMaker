@@ -36,22 +36,22 @@ public class ConvertUmlaut {
 			
 			switch (suspectedUmlaut) {
 			case aUml:
-				umlString.append("&auml");
+				umlString.append("&auml;");
 				break;
 			case uUml:
-				umlString.append("&uuml");
+				umlString.append("&uuml;");
 				break;
 			case oUml:
-				umlString.append("&ouml");
+				umlString.append("&ouml;");
 				break;
 			case AUml:
-				umlString.append("&Auml");
+				umlString.append("&Auml;");
 				break;
 			case OUml:
-				umlString.append("&Ouml");
+				umlString.append("&Ouml;");
 				break;
 			case UUml:
-				umlString.append("&Uuml");
+				umlString.append("&Uuml;");
 				break;
 			default:
 				umlString.append(suspectedUmlaut);
