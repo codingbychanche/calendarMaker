@@ -19,6 +19,8 @@ public class MainDemo {
 	static String path;
 
 	public static void main(String args[]) {
+		
+		System.out.println(ConvertUmlaut.toHtml("ä ü ö"));
 
 		if (args.length > 0) {
 			path = args[0];
@@ -45,7 +47,7 @@ public class MainDemo {
 				String endTime = e.getEndTime();
 				String courseNumber = e.getCourseNumber();
 				String vagNumber = e.getVagNumber();
-				String location = e.getLocation();
+				String location=e.getLocation();
 				String holiday = e.getHoliday();
 				String type = e.getType();
 				int day = e.getDay();
@@ -65,10 +67,15 @@ public class MainDemo {
 				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime
 						+ " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday
 						+ "   " + type + "\n" + sourceLine + "\n";
+			
 
 				if (e.isValidEntry)
-					System.out.println(line);
+					System.out.println(ConvertUmlaut.toHtml(line));
 			}
+		}
+		for (CalendarEntry ee: calendar){
+			String loc=ee.getLocation();
+			System.out.println("-----"+ConvertUmlaut.toHtml(loc));
 		}
 	}
 }
