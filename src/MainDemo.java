@@ -33,51 +33,77 @@ public class MainDemo {
 
 		calendar = myCalendar.getRawCalendar();
 
-		System.out.println("Total:" + myCalendar.getTotalNumberOfLinesRead());
-		System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
-		System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
-
-		Calendar today = Calendar.getInstance();
-		today.setTimeInMillis(System.currentTimeMillis());
+		getEntryForToday(calendar);
 
 		if (myCalendar.hasError()) {
 			System.out.println("Error reading:" + myCalendar.getErorrDescription());
 		} else {
+
+			System.out.println("Total:" + myCalendar.getTotalNumberOfLinesRead());
+			System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
+			System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
+
 			for (CalendarEntry e : calendar) {
 
-				String date = e.getDate();
-				String startTime = e.getStartTime();
-				String endTime = e.getEndTime();
-				String courseNumber = e.getCourseNumber();
-				String vagNumber = e.getVagNumber();
-				String location = e.getLocation();
-				String holiday = e.getHoliday();
-				String type = e.getType();
-				int day = e.getDay();
-				int month = e.getMonth();
-				int year = e.getYear();
-				String sourceLine = e.getOrgiriginalEntry();
+				if (e.isValidEntry) {
+					String date = e.getDate();
+					String startTime = e.getStartTime();
+					String endTime = e.getEndTime();
+					String courseNumber = e.getCourseNumber();
+					String vagNumber = e.getVagNumber();
+					String location = e.getLocation();
+					String holiday = e.getHoliday();
+					String type = e.getType();
+					int day = e.getDay();
+					int month = e.getMonth();
+					int year = e.getYear();
+					String sourceLine = e.getOrgiriginalEntry();
 
-				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime
-						+ " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday
-						+ "   " + type + "\n" + sourceLine + "\n";
+					String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:"
+							+ startTime + " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location
+							+ "  " + holiday + "   " + type + "\n" + sourceLine + "\n";
 
-				if (e.compareWith(today) == e.IS_TODAY)
-					System.out.println("---------- T O D A Y-----------------");
-				if (e.compareWith(today) == e.IS_SATURDAY)
-					System.out.println("SATURDAY");
-				if (e.compareWith(today) == e.IS_SUNDAY)
-					System.out.println("SUNDAY");
-				if (e.compareWith(today) == e.IS_NOT_TODAY_OR_WEEKEND)
-					System.out.println("nope");
-
-				System.out.println(ConvertUmlaut.toHtml(line));
+					System.out.println(ConvertUmlaut.toHtml(line));
+				}
 
 			}
 		}
-		for (CalendarEntry ee : calendar) {
-			String loc = ee.getLocation();
-			System.out.println("-----" + ConvertUmlaut.toHtml(loc));
+	}
+
+	/**
+	 * Get and show todays entry...
+	 */
+	public static void getEntryForToday(List<CalendarEntry> calendar) {
+
+		Calendar todaysDate = Calendar.getInstance();
+		todaysDate.setTimeInMillis(System.currentTimeMillis());
+
+		// Optain todays date.
+		//
+		// Month: January=0!
+		int day = todaysDate.get(Calendar.DAY_OF_MONTH);
+		int month = todaysDate.get(Calendar.MONTH)+1;
+		int year = todaysDate.get(Calendar.YEAR);
+		System.out.println("Today is:" + day + "." + month + "." + year);
+
+		int result;
+		for (CalendarEntry entry : calendar) {
+
+			result = entry.compareThisEntrysDateWith(todaysDate);
+			if (result == entry.IS_TODAY) {
+				System.out.println("Found");
+				System.out.println(entry.getOrgiriginalEntry());
+				break;
+			}
+			if (result==entry.IS_SATURDAY){
+				System.out.println("Today is a saturday, have fun!");
+				break;
+			}
+			if (result==entry.IS_SUNDAY){
+				System.out.println("Today is a sunday, have fun!");
+				break;
+			}
+			
 		}
 	}
 }

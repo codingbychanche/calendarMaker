@@ -284,29 +284,32 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Checks this entry against another {@link Calendar}- Object if it is
+	 * Checks this entry against another {@link CalendarEntry}- Object if it is
 	 * either belonging to an weekend or it is the same day as in the calendar
 	 * passed.
-	 *
+	 * 
 	 * @param calToCheck
-	 * @return Static value decearing this entry belonging to a weekend or it is
-	 *         the same day as given in the calendar passed.
+	 *            {@link Calendar}- object of which the date to be compared with
+	 *            this entry is optained from.
+	 *            
+	 * @return A static value declearing this entry belonging to a weekend or it
+	 *         is the same day as given in the calendar passed.
 	 */
-	public int compareWith(Calendar calToCheck) {
+	public int compareThisEntrysDateWith(Calendar calToCheck) {
 
-		int day = calToCheck.get(Calendar.DAY_OF_WEEK);
+		int dayOfMonth = calToCheck.get(Calendar.DAY_OF_MONTH);
+		int dayOfWeek = calToCheck.get(Calendar.DAY_OF_WEEK);
 		int month = calToCheck.get(Calendar.MONTH) + 1;
 		int year = calToCheck.get(Calendar.YEAR);
 
-		if (day == Calendar.SATURDAY)
+		if (dayOfWeek == Calendar.SATURDAY)
 			return IS_SATURDAY;
 
-		if (day == Calendar.SUNDAY)
+		if (dayOfWeek == Calendar.SUNDAY)
 			return IS_SUNDAY;
 
-		if ((calToCheck.get(Calendar.DAY_OF_MONTH) == this.getDayOfWeekForThisDate()
-				&& calToCheck.get(Calendar.YEAR) == this.getYear()
-				&& calToCheck.get(Calendar.MONTH) == this.getMonth()))
+		// doto: +2000 seems to be a very dirty hack :-(
+		if ((dayOfMonth == this.getDay()) && (year == this.getYear() + 2000) && (month == this.getMonth()))
 			return IS_TODAY;
 
 		return IS_NOT_TODAY_OR_WEEKEND;
