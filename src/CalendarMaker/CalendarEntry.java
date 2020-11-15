@@ -297,7 +297,6 @@ public class CalendarEntry {
 	 * Fields which are not equal can retrieved by invoking the dedicted getter- methods.
 	 * 
 	 * @param calendarEntryToCheck
-	 * @return true if entrys are different, false if not...
 	 */
 	public void compareThisCalendarEntryWith(CalendarEntry calendarEntryToCheck){
 		
@@ -327,26 +326,44 @@ public class CalendarEntry {
 			this.locationHasChanged=false;
 	}
 	
+	/**
+	 * @return True if this entry's date has changed.
+	 */
 	public boolean dateHasChanged (){
 		return dateHasChanged;
 	}
 	
+	/**
+	 * @return True if this entry's start time has changed.
+	 */
 	public boolean startTimeHasChanged (){
 		return startTimeHasChanged;
 	}
 	
+	/**
+	 * @return True if this entry's end time has changed.
+	 */
 	public boolean endTimeHasChanged(){
 		return endTimeHasChanged;
 	}
 	
+	/**
+	 * @return True if this entry's vag numer has changed.
+	 */
 	public boolean vagNumberHasChanged(){
 		return vagNumberHasChanged;
 	}
 	
+	/**
+	 * @return True if this entry's course number has changed.
+	 */
 	public boolean courseNumberHasChanged(){
 		return courseNumberHasChanged;
 	}
 	
+	/**
+	 * @return True if this entry's location has changed.
+	 */
 	public boolean locationHasChanged(){
 		return locationHasChanged;
 	}
