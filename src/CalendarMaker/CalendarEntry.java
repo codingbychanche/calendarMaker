@@ -12,12 +12,16 @@ import java.util.Date;
 
 public class CalendarEntry {
 
+	public boolean isValidEntry;
+	
 	public final int IS_SATURDAY = 2;
 	public final int IS_SUNDAY = 1;
-	public final int IS_TODAY = 3;
+	public final int HAS_SAME_DATE = 3;
 	public final int IS_NOT_TODAY_OR_WEEKEND = 4;
+	
+	// When comparing this entry these fields are used to descripe waht has changed....
+	private boolean dateHasChanged,startTimeHasChanged,endTimeHasChanged,vagNumberHasChanged,courseNumberHasChanged,locationHasChanged;
 
-	public boolean isValidEntry;
 	String date;
 	String time;
 	String type; // eq,uv etc
@@ -282,6 +286,87 @@ public class CalendarEntry {
 		currentEventTime.set(year + 2000, month - 1, day, 0, 23);
 		return currentEventTime.getTimeInMillis();
 	}
+	
+	/**
+	 * Compares this entry to a given entry. Date should be the same for both enrys,
+	 * which sould be checked before applying this method.<p>
+	 * 
+	 * Start/-endtime, vag number, course number and location are compared.
+	 * If any of these fields are no equal this entry is not decleared equal.
+	 * 
+	 * Fields which are not equal can retrieved by invoking the dedicted getter- methods.
+	 * 
+	 * @param calendarEntryToCheck
+	 */
+	public void compareThisCalendarEntryWith(CalendarEntry calendarEntryToCheck){
+		
+		this.dateHasChanged=true;
+		this.startTimeHasChanged=true;
+		this.endTimeHasChanged=true;
+		this.vagNumberHasChanged=true;
+		this.courseNumberHasChanged=true;
+		this.locationHasChanged=true;
+		
+		if (calendarEntryToCheck.getDate().equals(this.getDate()))
+			dateHasChanged=false;
+		
+		if (calendarEntryToCheck.getStartTime().equals(this.getStartTime()))
+			this.startTimeHasChanged=false;
+		
+		if (calendarEntryToCheck.getEndTime().equals(this.getEndTime()))
+			this.endTimeHasChanged=false;
+		
+		if (calendarEntryToCheck.getVagNumber().equals(this.getVagNumber()))
+			this.vagNumberHasChanged=false;
+		
+		if (calendarEntryToCheck.getCourseNumber().equals(this.getCourseNumber()))
+			this.courseNumberHasChanged=false;
+		
+		if (calendarEntryToCheck.getLocation().equals(this.getLocation()))
+			this.locationHasChanged=false;
+	}
+	
+	/**
+	 * @return True if this entry's date has changed.
+	 */
+	public boolean dateHasChanged (){
+		return dateHasChanged;
+	}
+	
+	/**
+	 * @return True if this entry's start time has changed.
+	 */
+	public boolean startTimeHasChanged (){
+		return startTimeHasChanged;
+	}
+	
+	/**
+	 * @return True if this entry's end time has changed.
+	 */
+	public boolean endTimeHasChanged(){
+		return endTimeHasChanged;
+	}
+	
+	/**
+	 * @return True if this entry's vag numer has changed.
+	 */
+	public boolean vagNumberHasChanged(){
+		return vagNumberHasChanged;
+	}
+	
+	/**
+	 * @return True if this entry's course number has changed.
+	 */
+	public boolean courseNumberHasChanged(){
+		return courseNumberHasChanged;
+	}
+	
+	/**
+	 * @return True if this entry's location has changed.
+	 */
+	public boolean locationHasChanged(){
+		return locationHasChanged;
+	}
 
 	/**
 	 * Checks this entry against another {@link CalendarEntry}- Object if it is
@@ -310,7 +395,7 @@ public class CalendarEntry {
 
 		// doto: +2000 seems to be a very dirty hack :-(
 		if ((dayOfMonth == this.getDay()) && (year == this.getYear() + 2000) && (month == this.getMonth()))
-			return IS_TODAY;
+			return HAS_SAME_DATE;
 
 		return IS_NOT_TODAY_OR_WEEKEND;
 	}
