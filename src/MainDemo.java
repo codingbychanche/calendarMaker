@@ -21,6 +21,24 @@ public class MainDemo {
 
 	public static void main(String args[]) {
 
+		// Compare Test
+		CalendarEntry e1 = new CalendarEntry(true, "1.1.2029", "UV", "ta9989", "229069", "Karlsruhe", "-", "-", "-");
+		CalendarEntry e2 = new CalendarEntry(true, "1.1.2020", "UV", "ta9989", "229068", "Karlsruhe", "-", "-", "-");
+
+		e1.compareThisCalendarEntryWith(e2);
+
+		if (e1.dateHasChanged())
+			System.out.println("Date has changed");
+		if (e1.startTimeHasChanged())
+			System.out.println("Start time changed");
+		if (e1.endTimeHasChanged())
+			System.out.println("End time changed");
+		if (e1.vagNumberHasChanged())
+			System.out.println("VAG changed");
+		if (e1.courseNumberHasChanged())
+			System.out.println("Course number changed");
+
+		// Check param's....
 		if (args.length > 0) {
 			path = args[0];
 		} else {
@@ -28,6 +46,7 @@ public class MainDemo {
 			return;
 		}
 
+		// Let's gooooo....
 		List<CalendarEntry> calendar = new ArrayList();
 		MakeCalendar myCalendar = new MakeCalendar(path);
 
@@ -82,7 +101,7 @@ public class MainDemo {
 		//
 		// Month: January=0!
 		int day = todaysDate.get(Calendar.DAY_OF_MONTH);
-		int month = todaysDate.get(Calendar.MONTH)+1;
+		int month = todaysDate.get(Calendar.MONTH) + 1;
 		int year = todaysDate.get(Calendar.YEAR);
 		System.out.println("Today is:" + day + "." + month + "." + year);
 
@@ -90,20 +109,20 @@ public class MainDemo {
 		for (CalendarEntry entry : calendar) {
 
 			result = entry.compareThisEntrysDateWith(todaysDate);
-			if (result == entry.IS_TODAY) {
+			if (result == entry.HAS_SAME_DATE) {
 				System.out.println("Found");
 				System.out.println(entry.getOrgiriginalEntry());
 				break;
 			}
-			if (result==entry.IS_SATURDAY){
+			if (result == entry.IS_SATURDAY) {
 				System.out.println("Today is a saturday, have fun!");
 				break;
 			}
-			if (result==entry.IS_SUNDAY){
+			if (result == entry.IS_SUNDAY) {
 				System.out.println("Today is a sunday, have fun!");
 				break;
 			}
-			
+
 		}
 	}
 }

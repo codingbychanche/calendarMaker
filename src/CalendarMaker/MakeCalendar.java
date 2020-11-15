@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This contains all calender entry objects and provieds methods to convert
- * these objects (e.c. into csv- or .ics - files).
+ * Creates a list of calendar entrys from a textfile and provieds methods to
+ * convert this calendar (e.g. into csv- or .ics - files).
  * 
  * @author Berthold
  *
@@ -36,12 +36,12 @@ public class MakeCalendar {
 	Pattern datumPattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
 	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
-	
+
 	Pattern timePattern = Pattern.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
-	Pattern locationPattern = Pattern.compile(
-			"(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)|"
-			+ "(Witten)|(Fulda)");
+	Pattern locationPattern = Pattern
+			.compile("(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)|"
+					+ "(Witten)|(Fulda)");
 
 	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
 	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
@@ -61,9 +61,11 @@ public class MakeCalendar {
 	String errorDescription;
 
 	/**
-	 * Reads the source file containing the calendar entry's, extracts them
-	 * by parsing line by line and creates a new entry for this calendar.
+	 * Reads the source file containing the calendar entry's, extracts them by
+	 * parsing line by line and creates a new entry for this calendar.
 	 *
+	 * @param path
+	 *            Path of the textfile containing the job schedule.
 	 */
 	public MakeCalendar(String path) {
 		//
@@ -93,10 +95,9 @@ public class MakeCalendar {
 				}
 
 				matcher = timePattern.matcher(lineRead);
-				while (matcher.find()) {  // start time
+				while (matcher.find()) { // start time
 					foundTime = matcher.group(0);
 				}
-				
 
 				matcher = courseNumberPattern.matcher(lineRead);
 				while (matcher.find()) {
@@ -181,7 +182,8 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * @return Total number of lines
+	 * @return Total number of lines read and converted from the textfile
+	 *         containing the job schedule.
 	 */
 	public int getTotalNumberOfLinesRead() {
 		return totalNumberOfLines;
@@ -212,8 +214,7 @@ public class MakeCalendar {
 	/**
 	 * Sole purpose, count number of lines the file specified contains.
 	 * 
-	 * @param path
-	 *            Files location.
+	 * @param path Files location.
 	 * @return Number of lines the file contains.
 	 */
 	public int getNumberOfLines(String path) {
