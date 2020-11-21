@@ -33,6 +33,8 @@ public class MakeCalendar {
 	//
 	// Patterns
 	//
+	Pattern claendarHeaderPattern=Pattern.compile("(?i)(lehrperson)(\\.|\\s|-)(?i)(einsatz)\\s+((\\d+)(\\.|\\s+))+(\\d+:)\\d+");
+	
 	Pattern datumPattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
 	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
@@ -51,7 +53,7 @@ public class MakeCalendar {
 	//
 	static final boolean IS_VALID_ENTRY = true;
 	static final boolean IS_INVALID_ENTRY = false;
-	String foundDate, foundTime, foundVagNumber, foundCourseNumber, foundLocation, foundHoliday, foundType;
+	String calendarHeader,foundDate, foundTime, foundVagNumber, foundCourseNumber, foundLocation, foundHoliday, foundType;
 	boolean hasDate, hasTime, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasType;
 
 	//
@@ -78,6 +80,8 @@ public class MakeCalendar {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 
+			calendarHeader="-";
+			
 			Matcher matcher;
 
 			while ((lineRead = br.readLine()) != null) {
@@ -88,6 +92,11 @@ public class MakeCalendar {
 				hasDate = hasTime = hasVagNumber = hasCourseNumber = hasLocation = hasHoliday = hasType = false;
 				foundDate = foundTime = foundCourseNumber = foundVagNumber = foundLocation = foundHoliday = foundType = "-";
 
+				matcher = claendarHeaderPattern.matcher(lineRead);
+				while (matcher.find()) {
+					calendarHeader = matcher.group(0);
+				}
+				
 				matcher = datumPattern.matcher(lineRead);
 				while (matcher.find()) {
 					foundDate = matcher.group(0);
@@ -165,6 +174,13 @@ public class MakeCalendar {
 	 */
 	public void addEntry(CalendarEntry clendarEntry) {
 		calendarEntrys.add(clendarEntry);
+	}
+	
+	/**
+	 * @return Description of the calendar containing it's revision date.
+	 */
+	public String getCalendarHeader(){
+		return calendarHeader;
 	}
 
 	/**
