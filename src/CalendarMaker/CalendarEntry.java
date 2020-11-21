@@ -288,13 +288,11 @@ public class CalendarEntry {
 	}
 	
 	/**
-	 * Compares this entry to a given entry. Date should be the same for both enrys,
-	 * which sould be checked before applying this method.<p>
+	 * Compares this entry to a given entry.<p>
 	 * 
 	 * Start/-endtime, vag number, course number and location are compared.
-	 * If any of these fields are no equal this entry is not decleared equal.
-	 * 
-	 * Fields which are not equal can retrieved by invoking the dedicted getter- methods.
+	 *
+	 * Fields which are not equal can be retrieved by invoking their dedicated getter- methods.
 	 * 
 	 * @param calendarEntryToCheck
 	 */

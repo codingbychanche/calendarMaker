@@ -58,6 +58,9 @@ public class MainDemo {
 			System.out.println("Error reading:" + myCalendar.getErorrDescription());
 		} else {
 
+			System.out.println("Kopfzeile:"+myCalendar.getCalendarHeader());
+			System.out.println("Bearbeitungsstand:"+myCalendar.getCalendarRevisionDate());
+			System.out.println("Bearbeitungsstand:"+myCalendar.getCalendarRevisionTime());
 			System.out.println("Total:" + myCalendar.getTotalNumberOfLinesRead());
 			System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
 			System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
