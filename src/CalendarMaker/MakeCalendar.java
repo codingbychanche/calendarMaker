@@ -40,7 +40,7 @@ public class MakeCalendar {
 	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
 
-	Pattern timeFormatRegularPattern=Pattern.compile("\\d+:\\d"); // e.g. 06:45
+	Pattern timeFormatRegularPattern=Pattern.compile("\\d+:\\d+"); // e.g. 06:45
 	Pattern timeFormatInCalendarSourceFilePattern = Pattern
 			.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
