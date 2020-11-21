@@ -31,19 +31,22 @@ public class MakeCalendar {
 	int totalNumberOfLines = 0, numberOfLinesValid = 0, numberOfLinesNotValid = 0;
 
 	//
-	// Patterns
+	// Regex- patterns
 	//
-	Pattern claendarHeaderPattern=Pattern.compile("(?i)(lehrperson)(\\.|\\s|-)(?i)(einsatz)\\s+((\\d+)(\\.|\\s+))+(\\d+:)\\d+");
-	
-	Pattern datumPattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
+	Pattern claendarHeaderPattern = Pattern
+			.compile("(?i)(lehrperson)(\\.|\\s|-)(?i)(einsatz)\\s+((\\d+)(\\.|\\s+))+(\\d+:)\\d+");
+
+	Pattern datePattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
 	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4}");
 
-	Pattern timePattern = Pattern.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
+	Pattern timeFormatRegularPattern=Pattern.compile("\\d+:\\d"); // e.g. 06:45
+	Pattern timeFormatInCalendarSourceFilePattern = Pattern
+			.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
 	Pattern locationPattern = Pattern
 			.compile("(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)|"
-					+ "(Witten)|(Fulda)");
+					+ "(Witten)|(Fulda)|(Virtueller Raum)|(Online)");
 
 	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
 	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
@@ -53,7 +56,9 @@ public class MakeCalendar {
 	//
 	static final boolean IS_VALID_ENTRY = true;
 	static final boolean IS_INVALID_ENTRY = false;
-	String calendarHeader,foundDate, foundTime, foundVagNumber, foundCourseNumber, foundLocation, foundHoliday, foundType;
+	String calendarHeader, revisionDate, revisionTime, foundDate, foundTime, foundVagNumber, foundCourseNumber,
+			foundLocation, foundHoliday, foundType;
+	
 	boolean hasDate, hasTime, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasType;
 
 	//
@@ -80,8 +85,8 @@ public class MakeCalendar {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 
-			calendarHeader="-";
-			
+			calendarHeader = "-";
+
 			Matcher matcher;
 
 			while ((lineRead = br.readLine()) != null) {
@@ -92,18 +97,29 @@ public class MakeCalendar {
 				hasDate = hasTime = hasVagNumber = hasCourseNumber = hasLocation = hasHoliday = hasType = false;
 				foundDate = foundTime = foundCourseNumber = foundVagNumber = foundLocation = foundHoliday = foundType = "-";
 
+				// Collect calendars header information
 				matcher = claendarHeaderPattern.matcher(lineRead);
 				while (matcher.find()) {
 					calendarHeader = matcher.group(0);
 				}
 				
-				matcher = datumPattern.matcher(lineRead);
+				matcher = datePattern.matcher(calendarHeader);
+				while (matcher.find()) {
+					revisionDate = matcher.group(0);
+				}
+				
+				matcher = timeFormatRegularPattern.matcher(calendarHeader);
+				while (matcher.find()) {
+					revisionTime = matcher.group(0);
+				}
+
+				matcher = datePattern.matcher(lineRead);
 				while (matcher.find()) {
 					foundDate = matcher.group(0);
 					hasDate = true;
 				}
 
-				matcher = timePattern.matcher(lineRead);
+				matcher = timeFormatInCalendarSourceFilePattern.matcher(lineRead);
 				while (matcher.find()) { // start time
 					foundTime = matcher.group(0);
 				}
@@ -175,12 +191,23 @@ public class MakeCalendar {
 	public void addEntry(CalendarEntry clendarEntry) {
 		calendarEntrys.add(clendarEntry);
 	}
-	
+
 	/**
 	 * @return Description of the calendar containing it's revision date.
 	 */
-	public String getCalendarHeader(){
+	public String getCalendarHeader() {
 		return calendarHeader;
+	}
+	
+	/**
+	 * @return Date of last revision of this calendar
+	 */
+	public String getCalendarRevisionDate(){
+		return revisionDate;
+	}
+	
+	public String getCalendarRevisionTime(){
+		return revisionTime;
 	}
 
 	/**
@@ -230,7 +257,8 @@ public class MakeCalendar {
 	/**
 	 * Sole purpose, count number of lines the file specified contains.
 	 * 
-	 * @param path Files location.
+	 * @param path
+	 *            Files location.
 	 * @return Number of lines the file contains.
 	 */
 	public int getNumberOfLines(String path) {
