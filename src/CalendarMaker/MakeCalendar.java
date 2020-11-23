@@ -182,6 +182,14 @@ public class MakeCalendar {
 			errorDescription = e.toString();
 		}
 	}
+	
+	/**
+	 * @return The calendar created containing all valid and invalid entry's in
+	 *         raw text.
+	 */
+	public List<CalendarEntry> getRawCalendar() {
+		return calendarEntrys;
+	}
 
 	/**
 	 * Adds a {@link CalendarEntry} instance to this calendar.
@@ -244,14 +252,6 @@ public class MakeCalendar {
 	 */
 	public String getErorrDescription() {
 		return errorDescription;
-	}
-
-	/**
-	 * @return The calendar created containing all valid and invalid entry's in
-	 *         raw text.
-	 */
-	public List<CalendarEntry> getRawCalendar() {
-		return calendarEntrys;
 	}
 
 	/**

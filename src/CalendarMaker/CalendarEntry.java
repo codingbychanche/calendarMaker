@@ -368,7 +368,7 @@ public class CalendarEntry {
 
 	/**
 	 * Checks this entry against another {@link CalendarEntry}- Object if it is
-	 * either belonging to an weekend or it is the same day as in the calendar
+	 * either belonging to a weekend or it is the same day as in the object
 	 * passed.
 	 * 
 	 * @param calToCheck

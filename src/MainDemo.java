@@ -17,7 +17,7 @@ import CalendarMaker.*;
 
 public class MainDemo {
 
-	static String path;
+	static String path,path2;
 
 	public static void main(String args[]) {
 
@@ -38,7 +38,7 @@ public class MainDemo {
 		if (e1.courseNumberHasChanged())
 			System.out.println("Course number changed");
 
-		// Check param's....
+		// Check param's passed
 		if (args.length > 0) {
 			path = args[0];
 		} else {
@@ -46,8 +46,8 @@ public class MainDemo {
 			return;
 		}
 
-		// Let's gooooo....
-		List<CalendarEntry> calendar = new ArrayList();
+		// Load file and parse entries...
+		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 		MakeCalendar myCalendar = new MakeCalendar(path);
 
 		calendar = myCalendar.getRawCalendar();
@@ -58,6 +58,7 @@ public class MainDemo {
 			System.out.println("Error reading:" + myCalendar.getErorrDescription());
 		} else {
 
+			// Get and display header data and status of the parsing process...
 			System.out.println("Kopfzeile:"+myCalendar.getCalendarHeader());
 			System.out.println("Bearbeitungsstand:"+myCalendar.getCalendarRevisionDate());
 			System.out.println("Bearbeitungsstand:"+myCalendar.getCalendarRevisionTime());
@@ -65,6 +66,7 @@ public class MainDemo {
 			System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
 			System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
 
+			// Get and display all entries...
 			for (CalendarEntry e : calendar) {
 
 				if (e.isValidEntry) {
@@ -93,7 +95,7 @@ public class MainDemo {
 	}
 
 	/**
-	 * Get and show todays entry...
+	 * An example of how to get the entry with today's date.
 	 */
 	public static void getEntryForToday(List<CalendarEntry> calendar) {
 
