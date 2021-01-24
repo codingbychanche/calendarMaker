@@ -22,8 +22,10 @@ public class MainDemo {
 	public static void main(String args[]) {
 
 		// Compare Test
-		CalendarEntry a = new CalendarEntry(true, "1.1.2029", "UV", "ta9989", "229069", "Karlsruhe", "-", "-", "-");
-		CalendarEntry b = new CalendarEntry(true, "1.1.2020", "UV", "ta9989", "229068", "Karlsruhe", "-", "-", "-");
+		CalendarEntry a = new CalendarEntry(true, false, "1.1.2029", "UV", "ta9989", "229069", "Karlsruhe", "-", "-",
+				"-");
+		CalendarEntry b = new CalendarEntry(true, false, "1.1.2020", "UV", "ta9989", "229068", "Karlsruhe", "-", "-",
+				"-");
 
 		a.compareThisCalendarEntryWith(b);
 
@@ -40,32 +42,19 @@ public class MainDemo {
 
 		// Load file and parse entries...
 		MakeCalendar myCalendar;
-		MakeCalendar myCalendar2;
 		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
-		List<CalendarEntry> calendar2 = new ArrayList<CalendarEntry>();
 
-		// First file
 		if (args.length > 0) {
 			myCalendar = new MakeCalendar(args[0]);
 
-			if (myCalendar.hasError()){
+			if (myCalendar.hasError()) {
 				System.out.println("Abording, error reading:" + myCalendar.getErorrDescription());
 				return;
-			}else
+			} else
 				calendar = myCalendar.getRawCalendar();
-		} else{
+		} else {
 			System.out.println("Not path/ filename.... Abbording.");
 			return;
-		}
-
-		// Second file?
-		if (args.length > 1) {
-			myCalendar2 = new MakeCalendar(args[1]);
-
-			if (myCalendar2.hasError())
-				System.out.println("Error:" + myCalendar2.getErorrDescription());
-			else
-				calendar2 = myCalendar2.getRawCalendar();
 		}
 
 		// Search and display todays calendar entry
@@ -80,31 +69,55 @@ public class MainDemo {
 		System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
 
 		// Get and display all entries...
+		/*
 		for (CalendarEntry e : calendar) {
-
-			if (e.isValidEntry) {
-				
-				String date = e.getDate();
-				String startTime = e.getStartTime();
-				String endTime = e.getEndTime();
-				String courseNumber = e.getCourseNumber();
-				String vagNumber = e.getVagNumber();
-				String location = e.getLocation();
-				String holiday = e.getHoliday();
-				String type = e.getType();
-				int day = e.getDay();
-				int month = e.getMonth();
-				int year = e.getYear();
-				String sourceLine = e.getOrgiriginalEntry();
-
-				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime
-						+ " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday
-						+ "   " + type + "\n" + sourceLine + "\n";
-
-				System.out.println(ConvertUmlaut.toHtml(line));
-			}
-
+			if (e.isValidEntry)
+				printCalendarEntry(e);
 		}
+*/
+		// Get and display all entrys matching a certain VAG- number
+		String vag="21/31";
+		System.out.println("");
+		System.out.println("Zeige:"+vag);
+		
+		List<CalendarEntry> entrysForASingleCourse = new ArrayList<CalendarEntry>();
+
+		entrysForASingleCourse = myCalendar.getCalenderEntrysMatchingCourseNumber(vag);
+
+		if (entrysForASingleCourse.size()>0)
+		for (CalendarEntry e1 : entrysForASingleCourse)
+			printCalendarEntry(e1);
+		else
+			System.out.println("Keine Einträge für diesen Kurs gefunden");
+	}
+
+	/**
+	 * Prints a single entry of the calendar.
+	 * 
+	 * @param e
+	 *            {@link CalendarEntry}
+	 */
+
+	private static void printCalendarEntry(CalendarEntry e) {
+		String date = e.getDate();
+
+		String startTime = e.getStartTime();
+		String endTime = e.getEndTime();
+		String courseNumber = e.getCourseNumber();
+		String vagNumber = e.getVagNumber();
+		String location = e.getLocation();
+		String holiday = e.getHoliday();
+		String type = e.getType();
+		int day = e.getDay();
+		int month = e.getMonth();
+		int year = e.getYear();
+		String sourceLine = e.getOrgiriginalEntry();
+
+		String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime + " End:"
+				+ endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday + "   " + type
+				+ "\n" + sourceLine + "\n";
+
+		System.out.println(ConvertUmlaut.toHtml(line));
 	}
 
 	/**

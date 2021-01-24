@@ -13,14 +13,20 @@ import java.util.Date;
 public class CalendarEntry {
 
 	public boolean isValidEntry;
-	
+	public boolean isWeekend;
+	public boolean isHoliday;
+
+	// When Comparing this entry to a given date, these fields represent the
+	// result
 	public final int IS_SATURDAY = 2;
 	public final int IS_SUNDAY = 1;
 	public final int HAS_SAME_DATE = 3;
 	public final int IS_NOT_TODAY_OR_WEEKEND = 4;
-	
-	// When comparing this entry these fields are used to descripe waht has changed....
-	private boolean dateHasChanged,startTimeHasChanged,endTimeHasChanged,vagNumberHasChanged,courseNumberHasChanged,locationHasChanged;
+
+	// When comparing this entry these fields are used to descripe what has
+	// changed....
+	private boolean dateHasChanged, startTimeHasChanged, endTimeHasChanged, vagNumberHasChanged, courseNumberHasChanged,
+			locationHasChanged;
 
 	String date;
 	String time;
@@ -29,7 +35,7 @@ public class CalendarEntry {
 	String vagNumber; // VAG------
 	String location;
 	String holiday;
-	String orgiriginalEntry; // Complete enry from source file.
+	String orgiriginalEntry; // Complete entry from source file.
 
 	/**
 	 * Creates a new entry for a {@link CalendarMaker} instance.
@@ -51,11 +57,13 @@ public class CalendarEntry {
 	 * @param orgiriginalEntry
 	 *            Unchanged entry from source file.
 	 */
-	public CalendarEntry(boolean isValidEntry, String date, String time, String type, String courseNumber,
-			String vagNumber, String location, String holiday, String orgiriginalEntry) {
+	public CalendarEntry(boolean isValidEntry, boolean isHoliday, String date, String time,
+			String type, String courseNumber, String vagNumber, String location, String holiday,
+			String orgiriginalEntry) {
 		super();
 
 		this.isValidEntry = isValidEntry;
+		this.isHoliday=isHoliday;
 
 		this.date = date;
 		this.time = time;
@@ -91,10 +99,25 @@ public class CalendarEntry {
 		return location;
 	}
 
+	/**
+	 * Gets the entry descriping this entry as an holiday.
+	 * 
+	 * @return Holiday description. 
+	 */
 	public String getHoliday() {
 		return holiday;
 	}
+	
+	/**
+	 * @return True if this entry is a holiday. False if not.
+	 */
+	public boolean isHoliday(){
+		return isHoliday;
+	}
 
+	/**
+	 * @return Raw entry from the source file.
+	 */
 	public String getOrgiriginalEntry() {
 		return orgiriginalEntry;
 	}
@@ -286,83 +309,85 @@ public class CalendarEntry {
 		currentEventTime.set(year + 2000, month - 1, day, 0, 23);
 		return currentEventTime.getTimeInMillis();
 	}
-	
+
 	/**
-	 * Compares this entry to a given entry.<p>
+	 * Compares this entry to a given entry.
+	 * <p>
 	 * 
-	 * Start/-endtime, vag number, course number and location are compared.
+	 * Start/-end time, vag number, course number and location are compared.
 	 *
-	 * Fields which are not equal can be retrieved by invoking their dedicated getter- methods.
+	 * Fields which are not equal can be retrieved by invoking their dedicated
+	 * getter- methods.
 	 * 
 	 * @param calendarEntryToCheck
 	 */
-	public void compareThisCalendarEntryWith(CalendarEntry calendarEntryToCheck){
-		
-		this.dateHasChanged=true;
-		this.startTimeHasChanged=true;
-		this.endTimeHasChanged=true;
-		this.vagNumberHasChanged=true;
-		this.courseNumberHasChanged=true;
-		this.locationHasChanged=true;
-		
+	public void compareThisCalendarEntryWith(CalendarEntry calendarEntryToCheck) {
+
+		this.dateHasChanged = true;
+		this.startTimeHasChanged = true;
+		this.endTimeHasChanged = true;
+		this.vagNumberHasChanged = true;
+		this.courseNumberHasChanged = true;
+		this.locationHasChanged = true;
+
 		if (calendarEntryToCheck.getDate().equals(this.getDate()))
-			dateHasChanged=false;
-		
+			dateHasChanged = false;
+
 		if (calendarEntryToCheck.getStartTime().equals(this.getStartTime()))
-			this.startTimeHasChanged=false;
-		
+			this.startTimeHasChanged = false;
+
 		if (calendarEntryToCheck.getEndTime().equals(this.getEndTime()))
-			this.endTimeHasChanged=false;
-		
+			this.endTimeHasChanged = false;
+
 		if (calendarEntryToCheck.getVagNumber().equals(this.getVagNumber()))
-			this.vagNumberHasChanged=false;
-		
+			this.vagNumberHasChanged = false;
+
 		if (calendarEntryToCheck.getCourseNumber().equals(this.getCourseNumber()))
-			this.courseNumberHasChanged=false;
-		
+			this.courseNumberHasChanged = false;
+
 		if (calendarEntryToCheck.getLocation().equals(this.getLocation()))
-			this.locationHasChanged=false;
+			this.locationHasChanged = false;
 	}
-	
+
 	/**
 	 * @return True if this entry's date has changed.
 	 */
-	public boolean dateHasChanged (){
+	public boolean dateHasChanged() {
 		return dateHasChanged;
 	}
-	
+
 	/**
 	 * @return True if this entry's start time has changed.
 	 */
-	public boolean startTimeHasChanged (){
+	public boolean startTimeHasChanged() {
 		return startTimeHasChanged;
 	}
-	
+
 	/**
 	 * @return True if this entry's end time has changed.
 	 */
-	public boolean endTimeHasChanged(){
+	public boolean endTimeHasChanged() {
 		return endTimeHasChanged;
 	}
-	
+
 	/**
 	 * @return True if this entry's vag numer has changed.
 	 */
-	public boolean vagNumberHasChanged(){
+	public boolean vagNumberHasChanged() {
 		return vagNumberHasChanged;
 	}
-	
+
 	/**
 	 * @return True if this entry's course number has changed.
 	 */
-	public boolean courseNumberHasChanged(){
+	public boolean courseNumberHasChanged() {
 		return courseNumberHasChanged;
 	}
-	
+
 	/**
 	 * @return True if this entry's location has changed.
 	 */
-	public boolean locationHasChanged(){
+	public boolean locationHasChanged() {
 		return locationHasChanged;
 	}
 
@@ -374,7 +399,7 @@ public class CalendarEntry {
 	 * @param calToCheck
 	 *            {@link Calendar}- object of which the date to be compared with
 	 *            this entry is optained from.
-	 *            
+	 * 
 	 * @return A static value declearing this entry belonging to a weekend or it
 	 *         is the same day as given in the calendar passed.
 	 */
@@ -401,7 +426,7 @@ public class CalendarEntry {
 	/**
 	 * Day of week.
 	 * 
-	 * @return Integer idicating the day of week.
+	 * @return Integer idicating the day of week for this event.
 	 */
 	public int getDayOfWeekForThisDate() {
 		int year = this.getYear();

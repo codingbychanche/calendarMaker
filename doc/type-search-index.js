@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"CalendarMaker","l":"CalendarEntry"},{"p":"CalendarMaker","l":"ConvertUmlaut"},{"p":"CalendarMaker","l":"MakeCalendar"}]

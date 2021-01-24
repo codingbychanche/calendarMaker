@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Creates a list of calendar entrys from a textfile and provieds methods to
+ * Creates a list of calendar entrys from a textfile and provides methods to
  * convert this calendar (e.g. into csv- or .ics - files).
  * 
  * @author Berthold
@@ -56,6 +56,7 @@ public class MakeCalendar {
 	//
 	static final boolean IS_VALID_ENTRY = true;
 	static final boolean IS_INVALID_ENTRY = false;
+	
 	String calendarHeader, revisionDate, revisionTime, foundDate, foundTime, foundVagNumber, foundCourseNumber,
 			foundLocation, foundHoliday, foundType;
 	
@@ -145,7 +146,7 @@ public class MakeCalendar {
 				matcher = holidayPattern.matcher(lineRead);
 				while (matcher.find()) {
 					foundHoliday = matcher.group(0);
-					hasHoliday = true;
+					hasHoliday= true;
 				}
 
 				matcher = typePattern.matcher(lineRead);
@@ -159,7 +160,8 @@ public class MakeCalendar {
 				// and create a calendar entry.
 				//
 				if (hasDate && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
-					CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, foundDate, foundTime, foundType,
+					
+					CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday,foundDate, foundTime, foundType,
 							foundCourseNumber, foundVagNumber, foundLocation, foundHoliday, lineRead);
 					this.addEntry(calendarEntry);
 					numberOfLinesValid++;
@@ -169,7 +171,7 @@ public class MakeCalendar {
 					// calendar entry, but, you'll never know.
 					// Store line, let the user decide...
 					//
-					CalendarEntry calendarEntry = new CalendarEntry(IS_INVALID_ENTRY, foundDate, foundTime, foundType,
+					CalendarEntry calendarEntry = new CalendarEntry(IS_INVALID_ENTRY, hasHoliday,foundDate, foundTime, foundType,
 							foundCourseNumber, foundVagNumber, foundLocation, foundHoliday, lineRead);
 					this.addEntry(calendarEntry);
 					numberOfLinesNotValid++;
@@ -190,6 +192,39 @@ public class MakeCalendar {
 	public List<CalendarEntry> getRawCalendar() {
 		return calendarEntrys;
 	}
+
+	
+	public List<CalendarEntry> getCalenderEntrysMatchingVAG(String vagNumber){
+		
+		List <CalendarEntry> filtered=new ArrayList();
+		for (CalendarEntry e:calendarEntrys){
+			if (e.getVagNumber().endsWith(vagNumber))
+				filtered.add(e);
+		}
+		return filtered;
+	}
+	
+
+	public List<CalendarEntry> getCalenderEntrysMatchingCourseNumber(String courseNumber){
+		
+		List <CalendarEntry> filtered=new ArrayList();
+		for (CalendarEntry e:calendarEntrys){
+			if (e.getVagNumber().endsWith(courseNumber))
+				filtered.add(e);
+		}
+		return filtered;
+	}
+	
+public List<CalendarEntry> getCalenderEntrysMatchingHoliday(String courseNumber){
+		
+		List <CalendarEntry> filtered=new ArrayList();
+		for (CalendarEntry e:calendarEntrys){
+			if (e.getVagNumber().endsWith(courseNumber))
+				filtered.add(e);
+		}
+		return filtered;
+	}
+
 
 	/**
 	 * Adds a {@link CalendarEntry} instance to this calendar.
