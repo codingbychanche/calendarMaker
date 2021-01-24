@@ -17,80 +17,93 @@ import CalendarMaker.*;
 
 public class MainDemo {
 
-	static String path,path2;
+	static String path, path2;
 
 	public static void main(String args[]) {
 
 		// Compare Test
-		CalendarEntry e1 = new CalendarEntry(true, "1.1.2029", "UV", "ta9989", "229069", "Karlsruhe", "-", "-", "-");
-		CalendarEntry e2 = new CalendarEntry(true, "1.1.2020", "UV", "ta9989", "229068", "Karlsruhe", "-", "-", "-");
+		CalendarEntry a = new CalendarEntry(true, "1.1.2029", "UV", "ta9989", "229069", "Karlsruhe", "-", "-", "-");
+		CalendarEntry b = new CalendarEntry(true, "1.1.2020", "UV", "ta9989", "229068", "Karlsruhe", "-", "-", "-");
 
-		e1.compareThisCalendarEntryWith(e2);
+		a.compareThisCalendarEntryWith(b);
 
-		if (e1.dateHasChanged())
+		if (a.dateHasChanged())
 			System.out.println("Date has changed");
-		if (e1.startTimeHasChanged())
+		if (a.startTimeHasChanged())
 			System.out.println("Start time changed");
-		if (e1.endTimeHasChanged())
+		if (a.endTimeHasChanged())
 			System.out.println("End time changed");
-		if (e1.vagNumberHasChanged())
+		if (a.vagNumberHasChanged())
 			System.out.println("VAG changed");
-		if (e1.courseNumberHasChanged())
+		if (a.courseNumberHasChanged())
 			System.out.println("Course number changed");
 
-		// Check param's passed
+		// Load file and parse entries...
+		MakeCalendar myCalendar;
+		MakeCalendar myCalendar2;
+		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
+		List<CalendarEntry> calendar2 = new ArrayList<CalendarEntry>();
+
+		// First file
 		if (args.length > 0) {
-			path = args[0];
-		} else {
+			myCalendar = new MakeCalendar(args[0]);
+
+			if (myCalendar.hasError()){
+				System.out.println("Abording, error reading:" + myCalendar.getErorrDescription());
+				return;
+			}else
+				calendar = myCalendar.getRawCalendar();
+		} else{
 			System.out.println("Not path/ filename.... Abbording.");
 			return;
 		}
 
-		// Load file and parse entries...
-		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
-		MakeCalendar myCalendar = new MakeCalendar(path);
+		// Second file?
+		if (args.length > 1) {
+			myCalendar2 = new MakeCalendar(args[1]);
 
-		calendar = myCalendar.getRawCalendar();
+			if (myCalendar2.hasError())
+				System.out.println("Error:" + myCalendar2.getErorrDescription());
+			else
+				calendar2 = myCalendar2.getRawCalendar();
+		}
 
+		// Search and display todays calendar entry
 		getEntryForToday(calendar);
 
-		if (myCalendar.hasError()) {
-			System.out.println("Error reading:" + myCalendar.getErorrDescription());
-		} else {
+		// Get and display header data and status of the parsing process...
+		System.out.println("Kopfzeile:" + myCalendar.getCalendarHeader());
+		System.out.println("Bearbeitungsstand:" + myCalendar.getCalendarRevisionDate());
+		System.out.println("Bearbeitungsstand:" + myCalendar.getCalendarRevisionTime());
+		System.out.println("Total:" + myCalendar.getTotalNumberOfLinesRead());
+		System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
+		System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
 
-			// Get and display header data and status of the parsing process...
-			System.out.println("Kopfzeile:"+myCalendar.getCalendarHeader());
-			System.out.println("Bearbeitungsstand:"+myCalendar.getCalendarRevisionDate());
-			System.out.println("Bearbeitungsstand:"+myCalendar.getCalendarRevisionTime());
-			System.out.println("Total:" + myCalendar.getTotalNumberOfLinesRead());
-			System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
-			System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
+		// Get and display all entries...
+		for (CalendarEntry e : calendar) {
 
-			// Get and display all entries...
-			for (CalendarEntry e : calendar) {
+			if (e.isValidEntry) {
+				
+				String date = e.getDate();
+				String startTime = e.getStartTime();
+				String endTime = e.getEndTime();
+				String courseNumber = e.getCourseNumber();
+				String vagNumber = e.getVagNumber();
+				String location = e.getLocation();
+				String holiday = e.getHoliday();
+				String type = e.getType();
+				int day = e.getDay();
+				int month = e.getMonth();
+				int year = e.getYear();
+				String sourceLine = e.getOrgiriginalEntry();
 
-				if (e.isValidEntry) {
-					String date = e.getDate();
-					String startTime = e.getStartTime();
-					String endTime = e.getEndTime();
-					String courseNumber = e.getCourseNumber();
-					String vagNumber = e.getVagNumber();
-					String location = e.getLocation();
-					String holiday = e.getHoliday();
-					String type = e.getType();
-					int day = e.getDay();
-					int month = e.getMonth();
-					int year = e.getYear();
-					String sourceLine = e.getOrgiriginalEntry();
+				String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime
+						+ " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday
+						+ "   " + type + "\n" + sourceLine + "\n";
 
-					String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:"
-							+ startTime + " End:" + endTime + "  " + courseNumber + "  " + vagNumber + "  " + location
-							+ "  " + holiday + "   " + type + "\n" + sourceLine + "\n";
-
-					System.out.println(ConvertUmlaut.toHtml(line));
-				}
-
+				System.out.println(ConvertUmlaut.toHtml(line));
 			}
+
 		}
 	}
 
