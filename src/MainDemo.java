@@ -69,14 +69,13 @@ public class MainDemo {
 		System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
 
 		// Get and display all entries...
-		/*
 		for (CalendarEntry e : calendar) {
 			if (e.isValidEntry)
 				printCalendarEntry(e);
 		}
-*/
+
 		// Get and display all entrys matching a certain VAG- number
-		String vag="21/31";
+		String vag="21/3104";
 		System.out.println("");
 		System.out.println("Zeige:"+vag);
 		

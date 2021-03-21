@@ -398,7 +398,7 @@ public class CalendarEntry {
 	 * 
 	 * @param calToCheck
 	 *            {@link Calendar}- object of which the date to be compared with
-	 *            this entry is optained from.
+	 *            this entry is obtained from.
 	 * 
 	 * @return A static value declearing this entry belonging to a weekend or it
 	 *         is the same day as given in the calendar passed.
