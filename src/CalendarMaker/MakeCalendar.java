@@ -28,6 +28,7 @@ public class MakeCalendar {
 	StringBuffer buffer = new StringBuffer();
 	String lineRead;
 
+	// Values telling us about the status of the calendar.
 	int totalNumberOfLines = 0, numberOfLinesValid = 0, numberOfLinesNotValid = 0;
 
 	//
@@ -46,7 +47,7 @@ public class MakeCalendar {
 
 	Pattern locationPattern = Pattern
 			.compile("(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)|"
-					+ "(Witten)|(Fulda)|(Virtueller Raum)|(Online)");
+					+ "(Witten)|(Fulda)|(Virtueller Raum)|(Online)|(K.ln)");
 
 	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
 	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
@@ -59,7 +60,14 @@ public class MakeCalendar {
 
 	String calendarHeader, revisionDate, revisionTime, foundDate, foundTime, foundVagNumber, foundCourseNumber,
 			foundLocation, foundHoliday, foundType;
+	
+	//
+	// Let us remember the last date read in case we found a line without a date
+	// which then must be another course at the same day (the last line with date read).
+	//
+	String lastDateRead; 
 
+	// Tells us what we have found inside the last line read.
 	boolean hasDate, hasTime, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasType;
 
 	//
@@ -72,14 +80,11 @@ public class MakeCalendar {
 	 * Reads the source file containing the calendar entry's, extracts them by
 	 * parsing line by line and creates a new entry for this calendar.
 	 *
-	 * @param path Path of the textfile containing the job schedule.
+	 * @param path Path of the text file containing the job schedule.
 	 */
 	public MakeCalendar(String path) {
-		//
-		// Read file line by line
-		//
+	
 		hasError = false;
-
 		totalNumberOfLines = getNumberOfLines(path);
 
 		try {
@@ -89,10 +94,13 @@ public class MakeCalendar {
 
 			Matcher matcher;
 
+			//
+			// Read file line by line
+			//
 			while ((lineRead = br.readLine()) != null) {
 
 				//
-				// Check line read for entrys that form a valid calendar entry
+				// Check line read for entries that form a valid calendar entry
 				//
 				hasDate = hasTime = hasVagNumber = hasCourseNumber = hasLocation = hasHoliday = hasType = false;
 				foundDate = foundTime = foundCourseNumber = foundVagNumber = foundLocation = foundHoliday = foundType = "-";
@@ -116,12 +124,14 @@ public class MakeCalendar {
 				matcher = datePattern.matcher(lineRead);
 				while (matcher.find()) {
 					foundDate = matcher.group(0);
+					lastDateRead=foundDate;
 					hasDate = true;
 				}
 
 				matcher = timeFormatInCalendarSourceFilePattern.matcher(lineRead);
 				while (matcher.find()) { // start time
 					foundTime = matcher.group(0);
+					hasTime=true;
 				}
 
 				matcher = courseNumberPattern.matcher(lineRead);
@@ -155,7 +165,7 @@ public class MakeCalendar {
 				}
 
 				//
-				// Check data obtained from line just read for valid contitions
+				// Check data obtained from line just read for valid conditions
 				// and create a calendar entry.
 				//
 				if (hasDate && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
@@ -165,15 +175,31 @@ public class MakeCalendar {
 					this.addEntry(calendarEntry);
 					numberOfLinesValid++;
 				} else {
+
 					//
-					// The line does not have valid conditions for a
-					// calendar entry, but, you'll never know.
-					// Store line, let the user decide...
+					// If the line just read contains no date but start and/ or end time and either of
+					// the strings describing a valid course, then it is declared as a valid entry
+					// for the last line with date read => another course at the same day....
 					//
-					CalendarEntry calendarEntry = new CalendarEntry(IS_INVALID_ENTRY, hasHoliday, foundDate, foundTime,
-							foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday, lineRead);
-					this.addEntry(calendarEntry);
-					numberOfLinesNotValid++;
+					if ( hasTime && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
+						CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday,lastDateRead,
+								foundTime, foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday,
+								lineRead);
+						this.addEntry(calendarEntry);
+						numberOfLinesValid++;
+					} else {
+
+						//
+						// The line does not have valid conditions for a
+						// calendar entry, but, you'll never know.
+						// Store line, let the user decide...
+						//
+						CalendarEntry calendarEntry = new CalendarEntry(IS_INVALID_ENTRY, hasHoliday, foundDate,
+								foundTime, foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday,
+								lineRead);
+						this.addEntry(calendarEntry);
+						numberOfLinesNotValid++;
+					}
 				}
 			}
 			br.close();
