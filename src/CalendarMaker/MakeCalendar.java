@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Creates a list of calendar entrys from a text file and provides methods to
+ * Creates a list of calendar entries from a text file and provides methods to
  * convert this calendar (e.g. into csv- or .ics - files).
  * 
  * @author Berthold
@@ -38,7 +40,9 @@ public class MakeCalendar {
 			.compile("(?i)(lehrperson)(\\.|\\s|-)(?i)(einsatz)\\s+((\\d+)(\\.|\\s+))+(\\d+:)\\d+");
 
 	Pattern datePattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
+	
 	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
+	
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4,}");
 
 	Pattern timeFormatRegularPattern = Pattern.compile("\\d+:\\d+"); // e.g. 06:45
@@ -47,7 +51,7 @@ public class MakeCalendar {
 
 	Pattern locationPattern = Pattern
 			.compile("(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)|"
-					+ "(Witten)|(Fulda)|(Virtueller Raum)|(Online)|(K.ln)");
+					+ "(Witten)|(Fulda)|(Virtueller Raum)|(Online)|(K.ln)|(Bad Homburg)");
 
 	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
 	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
@@ -77,7 +81,7 @@ public class MakeCalendar {
 	String errorDescription;
 
 	/**
-	 * Reads the source file containing the calendar entry's, extracts them by
+	 * Reads the source file containing the calendar entries, extracts them by
 	 * parsing line by line and creates a new entry for this calendar.
 	 *
 	 * @param path Path of the text file containing the job schedule.
@@ -211,7 +215,7 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * @return The calendar created containing all valid and invalid entry's in raw
+	 * @return The calendar created containing all valid and invalid entries in raw
 	 *         text.
 	 */
 	public List<CalendarEntry> getRawCalendar() {
@@ -233,7 +237,23 @@ public class MakeCalendar {
 		}
 		return filtered;
 	}
-
+	
+	/**
+	 * Builds a list of unique VAG- numbers.
+	 * 
+	 * @return List of unique VAG- numbers.
+	 */
+	public List<String> getListOfAllVAGNumbers(){
+		HashSet <String>v = new HashSet<>();
+	
+		for (CalendarEntry e:calendarEntrys) 
+			v.add(e.getVagNumber());
+		
+		ArrayList<String>vagNumbers=new ArrayList<>(v);
+		
+		return vagNumbers;
+	}
+	
 	/**
 	 * Gets all calendar entries matching the given course- number.
 	 * 
@@ -248,6 +268,22 @@ public class MakeCalendar {
 				filtered.add(e);
 		}
 		return filtered;
+	}
+	
+	/**
+	 * Gets all course numbers
+	 * 
+	 * @return A list of all course numbers
+	 */
+	public List<String> getListOfAllCourseNumbers(){
+		HashSet <String>c = new HashSet<>();
+	
+		for (CalendarEntry n:calendarEntrys) 
+			c.add(n.getCourseNumber());
+		
+		ArrayList<String>courseNumbers=new ArrayList<>(c);
+		
+		return courseNumbers;
 	}
 
 	/**
@@ -311,7 +347,7 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * @return Total number of lines read and converted from the textfile containing
+	 * @return Total number of lines read and converted from the text file containing
 	 *         the job schedule.
 	 */
 	public int getTotalNumberOfLinesRead() {

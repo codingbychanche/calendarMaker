@@ -74,7 +74,7 @@ public class MainDemo {
 				printCalendarEntry(e);
 		}
 
-		// Get and display all entrys matching a certain VAG- number
+		// Get and display all entries matching a certain VAG- number
 		String vag="21/3104";
 		System.out.println("");
 		System.out.println("Zeige:"+vag);
@@ -88,6 +88,20 @@ public class MainDemo {
 			printCalendarEntry(e1);
 		else
 			System.out.println("Keine Einträge für diesen Kurs gefunden");
+		
+		// Show a list of all VAG- numbers
+		List <String> vagNumbers=new ArrayList<>();
+		vagNumbers=myCalendar.getListOfAllVAGNumbers();
+		
+		for (String v:vagNumbers)
+			System.out.println(v);
+		
+		// Show a list of all course numbers.
+		List <String> courseNumbers=new ArrayList<>();
+		courseNumbers=myCalendar.getListOfAllCourseNumbers();
+		
+		for (String v:courseNumbers)
+			System.out.println(v);
 	}
 
 	/**
