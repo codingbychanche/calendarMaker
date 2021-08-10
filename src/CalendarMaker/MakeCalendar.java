@@ -40,9 +40,9 @@ public class MakeCalendar {
 			.compile("(?i)(lehrperson)(\\.|\\s|-)(?i)(einsatz)\\s+((\\d+)(\\.|\\s+))+(\\d+:)\\d+");
 
 	Pattern datePattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
-	
+
 	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
-	
+
 	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4,}");
 
 	Pattern timeFormatRegularPattern = Pattern.compile("\\d+:\\d+"); // e.g. 06:45
@@ -64,12 +64,13 @@ public class MakeCalendar {
 
 	String calendarHeader, revisionDate, revisionTime, foundDate, foundTime, foundVagNumber, foundCourseNumber,
 			foundLocation, foundHoliday, foundType;
-	
+
 	//
 	// Let us remember the last date read in case we found a line without a date
-	// which then must be another course at the same day (the last line with date read).
+	// which then must be another course at the same day (the last line with date
+	// read).
 	//
-	String lastDateRead; 
+	String lastDateRead;
 
 	// Tells us what we have found inside the last line read.
 	boolean hasDate, hasTime, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasType;
@@ -87,7 +88,7 @@ public class MakeCalendar {
 	 * @param path Path of the text file containing the job schedule.
 	 */
 	public MakeCalendar(String path) {
-	
+
 		hasError = false;
 		totalNumberOfLines = getNumberOfLines(path);
 
@@ -128,14 +129,14 @@ public class MakeCalendar {
 				matcher = datePattern.matcher(lineRead);
 				while (matcher.find()) {
 					foundDate = matcher.group(0);
-					lastDateRead=foundDate;
+					lastDateRead = foundDate;
 					hasDate = true;
 				}
 
 				matcher = timeFormatInCalendarSourceFilePattern.matcher(lineRead);
 				while (matcher.find()) { // start time
 					foundTime = matcher.group(0);
-					hasTime=true;
+					hasTime = true;
 				}
 
 				matcher = courseNumberPattern.matcher(lineRead);
@@ -181,12 +182,13 @@ public class MakeCalendar {
 				} else {
 
 					//
-					// If the line just read contains no date but start and/ or end time and either of
+					// If the line just read contains no date but start and/ or end time and either
+					// of
 					// the strings describing a valid course, then it is declared as a valid entry
 					// for the last line with date read => another course at the same day....
 					//
-					if ( hasTime && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
-						CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday,lastDateRead,
+					if (hasTime && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
+						CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday, lastDateRead,
 								foundTime, foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday,
 								lineRead);
 						this.addEntry(calendarEntry);
@@ -237,23 +239,32 @@ public class MakeCalendar {
 		}
 		return filtered;
 	}
-	
+
 	/**
-	 * Builds a list of unique VAG- numbers.
+	 * Builds a list of unique vag numbers. If a course number is passed as a
+	 * parameter then only the vag numbers assigned to the passed course number are
+	 * added.
 	 * 
-	 * @return List of unique VAG- numbers.
+	 * @param courseNumber
+	 * @return If a course number was passed a list of all vag numbers of this
+	 *         calendar. If a course number was passed a list of vag numbers
+	 *         assigned to this course number.
 	 */
-	public List<String> getListOfAllVAGNumbers(){
-		HashSet <String>v = new HashSet<>();
-	
-		for (CalendarEntry e:calendarEntrys) 
-			v.add(e.getVagNumber());
-		
-		ArrayList<String>vagNumbers=new ArrayList<>(v);
-		
+	public List<String> getListOfAllVAGNumbers(String courseNumber) {
+		HashSet<String> v = new HashSet<>();
+
+		for (CalendarEntry e : calendarEntrys) {
+			if (courseNumber.isEmpty())
+				v.add(e.getVagNumber());
+			else if (e.getCourseNumber().equals(courseNumber))
+				v.add(e.getVagNumber());
+		}
+
+		ArrayList<String> vagNumbers = new ArrayList<>(v);
+
 		return vagNumbers;
 	}
-	
+
 	/**
 	 * Gets all calendar entries matching the given course- number.
 	 * 
@@ -269,20 +280,28 @@ public class MakeCalendar {
 		}
 		return filtered;
 	}
-	
+
 	/**
-	 * Gets all course numbers
+	 * Builds a list of unique course numbers. If a vag number is passed as
+	 * parameter, only the course number matching this vag number is added.
 	 * 
-	 * @return A list of all course numbers
+	 * @param vagNumber If not empty, only the course with the matching vag number
+	 *                  is added.
+	 * @return List of all uunique course numbers or just the course number matching
+	 *         the passed vag number.
 	 */
-	public List<String> getListOfAllCourseNumbers(){
-		HashSet <String>c = new HashSet<>();
-	
-		for (CalendarEntry n:calendarEntrys) 
-			c.add(n.getCourseNumber());
-		
-		ArrayList<String>courseNumbers=new ArrayList<>(c);
-		
+	public List<String> getListOfAllCourseNumbers(String vagNumber) {
+		HashSet<String> c = new HashSet<>();
+
+		for (CalendarEntry n : calendarEntrys) {
+			if (vagNumber.isEmpty())
+				c.add(n.getCourseNumber());
+			else if (n.getVagNumber().equals(vagNumber))
+				c.add(n.getCourseNumber());
+		}
+
+		ArrayList<String> courseNumbers = new ArrayList<>(c);
+
 		return courseNumbers;
 	}
 
@@ -347,8 +366,8 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * @return Total number of lines read and converted from the text file containing
-	 *         the job schedule.
+	 * @return Total number of lines read and converted from the text file
+	 *         containing the job schedule.
 	 */
 	public int getTotalNumberOfLinesRead() {
 		return totalNumberOfLines;

@@ -91,17 +91,17 @@ public class MainDemo {
 		
 		// Show a list of all VAG- numbers
 		List <String> vagNumbers=new ArrayList<>();
-		vagNumbers=myCalendar.getListOfAllVAGNumbers();
+		vagNumbers=myCalendar.getListOfAllVAGNumbers("Ta9989");
 		
 		for (String v:vagNumbers)
-			System.out.println(v);
+			System.out.println("VAG # "+v);
 		
 		// Show a list of all course numbers.
 		List <String> courseNumbers=new ArrayList<>();
-		courseNumbers=myCalendar.getListOfAllCourseNumbers();
+		courseNumbers=myCalendar.getListOfAllCourseNumbers("");
 		
 		for (String v:courseNumbers)
-			System.out.println(v);
+			System.out.println("Course # "+v);
 	}
 
 	/**
