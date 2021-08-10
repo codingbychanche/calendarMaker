@@ -287,7 +287,7 @@ public class MakeCalendar {
 	 * 
 	 * @param vagNumber If not empty, only the course with the matching vag number
 	 *                  is added.
-	 * @return List of all uunique course numbers or just the course number matching
+	 * @return List of all unique course numbers or just the course number matching
 	 *         the passed vag number.
 	 */
 	public List<String> getListOfAllCourseNumbers(String vagNumber) {
