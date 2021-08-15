@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -241,9 +242,9 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * Builds a list of unique vag numbers. If a course number is passed as a
-	 * parameter then only the vag numbers assigned to the passed course number are
-	 * added.
+	 * Builds a list of unique vag numbers from valid entries. If a course number is
+	 * passed as a parameter then only the vag numbers assigned to the passed course
+	 * number are added.
 	 * 
 	 * @param courseNumber
 	 * @return If a course number was passed a list of all vag numbers of this
@@ -254,10 +255,12 @@ public class MakeCalendar {
 		HashSet<String> v = new HashSet<>();
 
 		for (CalendarEntry e : calendarEntrys) {
-			if (courseNumber.isEmpty())
-				v.add(e.getVagNumber());
-			else if (e.getCourseNumber().equals(courseNumber))
-				v.add(e.getVagNumber());
+			if (e.isValidEntry) {
+				if (courseNumber.isEmpty())
+					v.add(e.getVagNumber());
+				else if (e.getCourseNumber().equals(courseNumber))
+					v.add(e.getVagNumber());
+			}
 		}
 
 		ArrayList<String> vagNumbers = new ArrayList<>(v);
@@ -282,8 +285,8 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * Builds a list of unique course numbers. If a vag number is passed as
-	 * parameter, only the course number matching this vag number is added.
+	 * Builds a list of unique course numbers from valid calendar entries. If a vag
+	 * number is passed, only the course number matching this vag number is added.
 	 * 
 	 * @param vagNumber If not empty, only the course with the matching vag number
 	 *                  is added.
@@ -294,10 +297,12 @@ public class MakeCalendar {
 		HashSet<String> c = new HashSet<>();
 
 		for (CalendarEntry n : calendarEntrys) {
-			if (vagNumber.isEmpty())
-				c.add(n.getCourseNumber());
-			else if (n.getVagNumber().equals(vagNumber))
-				c.add(n.getCourseNumber());
+			if (n.isValidEntry) {
+				if (vagNumber.isEmpty())
+					c.add(n.getCourseNumber());
+				else if (n.getVagNumber().equals(vagNumber))
+					c.add(n.getCourseNumber());
+			}
 		}
 
 		ArrayList<String> courseNumbers = new ArrayList<>(c);
@@ -319,6 +324,29 @@ public class MakeCalendar {
 				filtered.add(e);
 		}
 		return filtered;
+	}
+
+	/**
+	 * Builds a list of all courses and their associated vag numbers from valid
+	 * entries.
+	 * 
+	 * @return Course list containing course number and vag number.
+	 */
+	public List<String> getCourseList() {
+		LinkedHashSet<String> courseList = new LinkedHashSet<>();
+		courseList.add("*");
+		
+		List<String> courseNumbers = new ArrayList<>();
+		courseNumbers = this.getListOfAllCourseNumbers("");
+
+		for (String course : courseNumbers) {
+			for (CalendarEntry calEntry : calendarEntrys) {
+				if (calEntry.getCourseNumber().equals(course))
+					courseList.add(course + "," + calEntry.getVagNumber());
+			}
+		}
+		ArrayList<String> c = new ArrayList<>(courseList);
+		return c;
 	}
 
 	/**

@@ -102,6 +102,14 @@ public class MainDemo {
 		
 		for (String v:courseNumbers)
 			System.out.println("Course # "+v);
+		
+		// Show a list of all courses, sorted by VAG- number
+		List <String> courses=new ArrayList<>();
+		courses=myCalendar.getCourseList();
+
+		for (String cc:courses)
+			System.out.println(cc);
+		
 	}
 
 	/**
