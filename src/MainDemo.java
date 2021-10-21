@@ -1,5 +1,8 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -44,16 +47,24 @@ public class MainDemo {
 		MakeCalendar myCalendar;
 		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 
-		if (args.length > 0) {
-			myCalendar = new MakeCalendar(args[0]);
+		try {
+			InputStream inputStream;
+			if (args.length > 0) {
 
-			if (myCalendar.hasError()) {
-				System.out.println("Abording, error reading:" + myCalendar.getErorrDescription());
+				inputStream = new FileInputStream(args[0]);
+				myCalendar = new MakeCalendar(inputStream);
+
+				if (myCalendar.hasError()) {
+					System.out.println("Abording, error reading:" + myCalendar.getErorrDescription());
+					return;
+				} else
+					calendar = myCalendar.getRawCalendar();
+			} else {
+				System.out.println("Not path/ filename.... Abbording.");
 				return;
-			} else
-				calendar = myCalendar.getRawCalendar();
-		} else {
-			System.out.println("Not path/ filename.... Abbording.");
+			}
+		} catch (IOException e) {
+			myCalendar=null;
 			return;
 		}
 
@@ -75,48 +86,47 @@ public class MainDemo {
 		}
 
 		// Get and display all entries matching a certain VAG- number
-		String vag="21/3104";
+		String vag = "21/3104";
 		System.out.println("");
-		System.out.println("Zeige:"+vag);
-		
+		System.out.println("Zeige:" + vag);
+
 		List<CalendarEntry> entrysForASingleCourse = new ArrayList<CalendarEntry>();
 
 		entrysForASingleCourse = myCalendar.getCalenderEntrysMatchingCourseNumber(vag);
 
-		if (entrysForASingleCourse.size()>0)
-		for (CalendarEntry e1 : entrysForASingleCourse)
-			printCalendarEntry(e1);
+		if (entrysForASingleCourse.size() > 0)
+			for (CalendarEntry e1 : entrysForASingleCourse)
+				printCalendarEntry(e1);
 		else
 			System.out.println("Keine Einträge für diesen Kurs gefunden");
-		
-		// Show a list of all VAG- numbers
-		List <String> vagNumbers=new ArrayList<>();
-		vagNumbers=myCalendar.getListOfAllVAGNumbers("Ta9989");
-		
-		for (String v:vagNumbers)
-			System.out.println("VAG # "+v);
-		
-		// Show a list of all course numbers.
-		List <String> courseNumbers=new ArrayList<>();
-		courseNumbers=myCalendar.getListOfAllCourseNumbers("");
-		
-		for (String v:courseNumbers)
-			System.out.println("Course # "+v);
-		
-		// Show a list of all courses, sorted by VAG- number
-		List <String> courses=new ArrayList<>();
-		courses=myCalendar.getCourseList();
 
-		for (String cc:courses)
+		// Show a list of all VAG- numbers
+		List<String> vagNumbers = new ArrayList<>();
+		vagNumbers = myCalendar.getListOfAllVAGNumbers("Ta9989");
+
+		for (String v : vagNumbers)
+			System.out.println("VAG # " + v);
+
+		// Show a list of all course numbers.
+		List<String> courseNumbers = new ArrayList<>();
+		courseNumbers = myCalendar.getListOfAllCourseNumbers("");
+
+		for (String v : courseNumbers)
+			System.out.println("Course # " + v);
+
+		// Show a list of all courses, sorted by VAG- number
+		List<String> courses = new ArrayList<>();
+		courses = myCalendar.getCourseList();
+
+		for (String cc : courses)
 			System.out.println(cc);
-		
+
 	}
 
 	/**
 	 * Prints a single entry of the calendar.
 	 * 
-	 * @param e
-	 *            {@link CalendarEntry}
+	 * @param e {@link CalendarEntry}
 	 */
 
 	private static void printCalendarEntry(CalendarEntry e) {

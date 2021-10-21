@@ -2,6 +2,9 @@ package CalendarMaker;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FilterInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -88,13 +91,14 @@ public class MakeCalendar {
 	 *
 	 * @param path Path of the text file containing the job schedule.
 	 */
-	public MakeCalendar(String path) {
+	public MakeCalendar(InputStream stream) {
 
 		hasError = false;
-		totalNumberOfLines = getNumberOfLines(path);
+		//totalNumberOfLines = getNumberOfLines(path);
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(path));
+			InputStreamReader reader=new InputStreamReader(stream);
+			BufferedReader br = new BufferedReader(reader);
 
 			calendarHeader = "-";
 
