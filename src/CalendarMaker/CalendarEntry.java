@@ -9,7 +9,6 @@ import java.util.Date;
  * @author Berthold
  *
  */
-
 public class CalendarEntry {
 
 	public boolean isValidEntry;
@@ -188,7 +187,6 @@ public class CalendarEntry {
 		String t = time.replace("|", " ").trim();
 		t = t.replace("_", "");
 		String[] tParts = t.split(" ");
-		System.out.println(t);
 
 		if (tParts.length > 0)
 			return tParts[0];

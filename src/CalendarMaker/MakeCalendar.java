@@ -40,25 +40,25 @@ public class MakeCalendar {
 	//
 	// Regex- patterns
 	//
-	Pattern claendarHeaderPattern = Pattern
+	public static final Pattern claendarHeaderPattern = Pattern
 			.compile("(?i)(lehrperson)(\\.|\\s|-)(?i)(einsatz)\\s+((\\d+)(\\.|\\s+))+(\\d+:)\\d+");
 
-	Pattern datePattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
+	public static final Pattern datePattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
 
-	Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
+	public static final Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
 
-	Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4,}");
+	public static final Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4,}");
 
-	Pattern timeFormatRegularPattern = Pattern.compile("\\d+:\\d+"); // e.g. 06:45
-	Pattern timeFormatInCalendarSourceFilePattern = Pattern
+	public static final Pattern timeFormatRegularPattern = Pattern.compile("\\d+:\\d+"); // e.g. 06:45
+	public static final Pattern timeFormatInCalendarSourceFilePattern = Pattern
 			.compile("(\\|\\s?_?\\d{1,2}\\.\\d{1,2}\\|)(\\d{1,2}\\.\\d{1,2}\\|)");
 
-	Pattern locationPattern = Pattern
+	public static final Pattern locationPattern = Pattern
 			.compile("(?i)(Karlsruhe)|(M.nchen)|(Hannover)|(Berlin)|(Freiburg)|(Wuppertal)|(Saarbr.cken)|(Ludwigsburg)|"
 					+ "(Witten)|(Fulda)|(Virtueller Raum)|(Online)|(K.ln)|(Bad Homburg)");
 
-	Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
-	Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
+	public static final Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
+	public static final Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
 
 	//
 	// Result
@@ -94,10 +94,10 @@ public class MakeCalendar {
 	public MakeCalendar(InputStream stream) {
 
 		hasError = false;
-		//totalNumberOfLines = getNumberOfLines(path);
+		// totalNumberOfLines = getNumberOfLines(path);
 
 		try {
-			InputStreamReader reader=new InputStreamReader(stream);
+			InputStreamReader reader = new InputStreamReader(stream);
 			BufferedReader br = new BufferedReader(reader);
 
 			calendarHeader = "-";
@@ -222,8 +222,9 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * @return The calendar created containing all valid and invalid entries in raw
-	 *         text.
+	 * The calendar created containing all valid and invalid entries.
+	 * 
+	 * @return A list of {@link CalendarEntry} objects.
 	 */
 	public List<CalendarEntry> getRawCalendar() {
 		return calendarEntrys;
@@ -233,7 +234,9 @@ public class MakeCalendar {
 	 * Gets all calendar entries matching the given VAG- number.
 	 * 
 	 * @param vagNumber
-	 * @return List of matching courses
+	 * @return List of {@link CalendarEntry} objects containing all matching
+	 *         courses.
+	 * 
 	 */
 	public List<CalendarEntry> getCalenderEntrysMatchingVAG(String vagNumber) {
 
@@ -246,14 +249,15 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * Builds a list of unique vag numbers from valid entries. If a course number is
-	 * passed as a parameter then only the vag numbers assigned to the passed course
-	 * number are added.
+	 * Builds a list containing all unique vag numbers from all valid entries of
+	 * this calendar. If a course number was passed as a parameter then only the vag
+	 * numbers assigned to the passed course number are added.
 	 * 
 	 * @param courseNumber
-	 * @return If a course number was passed a list of all vag numbers of this
-	 *         calendar. If a course number was passed a list of vag numbers
-	 *         assigned to this course number.
+	 * @return A list of {@link CalendarEntry} objects. If no course number was
+	 *         passed a list of all unique vag numbers of this calendar. If a course
+	 *         number was passed a list of unique vag numbers assigned to this
+	 *         course number.
 	 */
 	public List<String> getListOfAllVAGNumbers(String courseNumber) {
 		HashSet<String> v = new HashSet<>();
@@ -339,7 +343,7 @@ public class MakeCalendar {
 	public List<String> getCourseList() {
 		LinkedHashSet<String> courseList = new LinkedHashSet<>();
 		courseList.add("*");
-		
+
 		List<String> courseNumbers = new ArrayList<>();
 		courseNumbers = this.getListOfAllCourseNumbers("");
 
@@ -384,14 +388,14 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * @return Number of lines which represent a valid calendar entry.
+	 * @return Number of lines which represent a valid calendar entrys.
 	 */
 	public int getNumberOfLinesValid() {
 		return numberOfLinesValid;
 	}
 
 	/**
-	 * @return Number of lines which represent an invalid calendar entry.
+	 * @return Number of lines which represent an invalid calendar entrys.
 	 */
 	public int getNumberOfLinesNotValid() {
 		return numberOfLinesNotValid;
@@ -438,5 +442,33 @@ public class MakeCalendar {
 			errorDescription = e.toString();
 		}
 		return lines;
+	}
+
+	/**
+	 * Performs a regex- check.
+	 * 
+	 * @param pattern
+	 * @param string
+	 * @return true if the given string contains the matching pattern, false if not.
+	 */
+	public boolean checkIfRegexPatternMatches(Pattern pattern, String string) {
+		Matcher matcher = pattern.matcher(string);
+		while (matcher.find())
+			return true;
+		return false;
+	}
+
+	/**
+	 * Gets the matching group.
+	 * 
+	 * @param pattern
+	 * @param string
+	 * @return The string found or null if no match.
+	 */
+	public String getMatcherGroup(Pattern pattern, String string) {
+		Matcher matcher = pattern.matcher(string);
+		while (matcher.find())
+			return matcher.group(0);
+		return null;
 	}
 }

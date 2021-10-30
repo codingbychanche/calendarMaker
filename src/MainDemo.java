@@ -24,11 +24,138 @@ public class MainDemo {
 
 	public static void main(String args[]) {
 
+		// Load file and parse entries...
+		MakeCalendar myCalendar, mySecondCalendar;
+		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
+
+		// Checkm if at least one path was passed and if so, read
+		if (args.length > 0) {
+			myCalendar = readJobSchedule(args[0]);
+		} else {
+			System.out.println("No filename... Abording!");
+			return;
+		}
+		if (myCalendar == null) {
+			System.out.println("Error reading.....");
+			return;
+		}
+
+		// If a second path was given, read second calendar...
+		// The second file read, second calendar created is
+		// used to show how to calendars can be compared using
+		// this library.
+		if (args.length > 1)
+			mySecondCalendar = readJobSchedule(args[0]);
+
+		//
+		// DEMO
+		//
+		// Shows how to use the library
+		//
+		// Search and display todays calendar entry
+		//
+		System.out.println("Heute:");
+		getEntryForToday(calendar);
+		System.out.println("-------------------------------------------------------------------------------");
+
+		//
+		// Get and display header data and status of the parsing process...
+		//
+		System.out.println("Allgemeines:");
+		System.out.println("Kopfzeile:" + myCalendar.getCalendarHeader());
+		System.out.println("Bearbeitungsstand:" + myCalendar.getCalendarRevisionDate());
+		System.out.println("Bearbeitungsstand:" + myCalendar.getCalendarRevisionTime());
+		System.out.println("Total:" + myCalendar.getTotalNumberOfLinesRead());
+		System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
+		System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
+		System.out.println("-------------------------------------------------------------------------------");
+		//
+		// Get and display all entries...
+		//
+		System.out.println("Alle Einträge:");
+		for (CalendarEntry e : calendar) {
+			if (e.isValidEntry)
+				printCalendarEntry(e);
+		}
+		System.out.println("-------------------------------------------------------------------------------");
+
+		//
+		// Get and display all entries matching a certain VAG- number
+		//
+		String vag = "21/22416";
+		System.out.println("");
+		System.out.println("Alle zu VAG:" + vag + " passenden Einträge");
+
+		List<CalendarEntry> entrysForASingleCourse = new ArrayList<CalendarEntry>();
+		entrysForASingleCourse = myCalendar.getCalenderEntrysMatchingCourseNumber(vag);
+
+		if (entrysForASingleCourse.size() > 0)
+			for (CalendarEntry e1 : entrysForASingleCourse)
+				printCalendarEntry(e1);
+		else
+			System.out.println("Keine Einträge für diesen Kurs gefunden");
+
+		System.out.println("-------------------------------------------------------------------------------");
+
+		//
+		// Show a list of all VAG- numbers
+		//
+		System.out.println("Alle VAG- Nummern:");
+		List<String> vagNumbers = new ArrayList<>();
+		vagNumbers = myCalendar.getListOfAllVAGNumbers("Ta9989");
+
+		for (String v : vagNumbers)
+			System.out.println("VAG # " + v);
+
+		System.out.println("-------------------------------------------------------------------------------");
+
+		//
+		// Show a list of all course numbers.
+		//
+		System.out.println("Alle Kursnummern:");
+		List<String> courseNumbers = new ArrayList<>();
+		courseNumbers = myCalendar.getListOfAllCourseNumbers("");
+
+		for (String v : courseNumbers)
+			System.out.println("Course # " + v);
+
+		System.out.println("-------------------------------------------------------------------------------");
+
+		//
+		// Show a list of all courses, sorted by VAG- number
+		//
+		System.out.println("Alle Lehrgänge, sortiert nach VAG- Nummer:");
+		List<String> courses = new ArrayList<>();
+		courses = myCalendar.getCourseList();
+
+		for (String cc : courses)
+			System.out.println(cc);
+
+		System.out.println("-------------------------------------------------------------------------------");
+
+		//
+		// Check if given search criteria is a valid VAG- number
+		//
+		System.out.println("Test ob ein bestimmtes Muster zutrifft:");
+		String vagToTest = "45/234544";
+		if (myCalendar.checkIfRegexPatternMatches(myCalendar.vagNumberPattern, vagToTest))
+			System.out.println(vagToTest + " is VAG");
+		else
+			System.out.println(vagToTest + " is not a valid VAG");
+		
+		System.out.println("-------------------------------------------------------------------------------");
+		
+		//
 		// Compare Test
-		CalendarEntry a = new CalendarEntry(true, false, "1.1.2029", "UV", "ta9989", "229069", "Karlsruhe", "-", "-",
-				"-");
-		CalendarEntry b = new CalendarEntry(true, false, "1.1.2020", "UV", "ta9989", "229068", "Karlsruhe", "-", "-",
-				"-");
+		// boolean isValidEntry, boolean isHoliday, String date, String time,
+		// String type, String courseNumber, String vagNumber, String location, String holiday,
+		// String orgiriginalEntry
+		// 
+		System.out.println("Vergleich:");
+		CalendarEntry a = new CalendarEntry(true, false, "1.1.2029", "6:30", "UV", "BÜ221", "213456", "Karlsruhe", "b",
+				"c");
+		CalendarEntry b = new CalendarEntry(true, false, "1.1.2029", "6:31", "UV", "BÜ222", "213453", "Karlsruhe", "b",
+				"c");
 
 		a.compareThisCalendarEntryWith(b);
 
@@ -42,84 +169,10 @@ public class MainDemo {
 			System.out.println("VAG changed");
 		if (a.courseNumberHasChanged())
 			System.out.println("Course number changed");
+		if (a.locationHasChanged())
+			System.out.println("Location changed");
 
-		// Load file and parse entries...
-		MakeCalendar myCalendar;
-		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
-
-		try {
-			InputStream inputStream;
-			if (args.length > 0) {
-
-				inputStream = new FileInputStream(args[0]);
-				myCalendar = new MakeCalendar(inputStream);
-
-				if (myCalendar.hasError()) {
-					System.out.println("Abording, error reading:" + myCalendar.getErorrDescription());
-					return;
-				} else
-					calendar = myCalendar.getRawCalendar();
-			} else {
-				System.out.println("Not path/ filename.... Abbording.");
-				return;
-			}
-		} catch (IOException e) {
-			myCalendar=null;
-			return;
-		}
-
-		// Search and display todays calendar entry
-		getEntryForToday(calendar);
-
-		// Get and display header data and status of the parsing process...
-		System.out.println("Kopfzeile:" + myCalendar.getCalendarHeader());
-		System.out.println("Bearbeitungsstand:" + myCalendar.getCalendarRevisionDate());
-		System.out.println("Bearbeitungsstand:" + myCalendar.getCalendarRevisionTime());
-		System.out.println("Total:" + myCalendar.getTotalNumberOfLinesRead());
-		System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
-		System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
-
-		// Get and display all entries...
-		for (CalendarEntry e : calendar) {
-			if (e.isValidEntry)
-				printCalendarEntry(e);
-		}
-
-		// Get and display all entries matching a certain VAG- number
-		String vag = "21/3104";
-		System.out.println("");
-		System.out.println("Zeige:" + vag);
-
-		List<CalendarEntry> entrysForASingleCourse = new ArrayList<CalendarEntry>();
-
-		entrysForASingleCourse = myCalendar.getCalenderEntrysMatchingCourseNumber(vag);
-
-		if (entrysForASingleCourse.size() > 0)
-			for (CalendarEntry e1 : entrysForASingleCourse)
-				printCalendarEntry(e1);
-		else
-			System.out.println("Keine Einträge für diesen Kurs gefunden");
-
-		// Show a list of all VAG- numbers
-		List<String> vagNumbers = new ArrayList<>();
-		vagNumbers = myCalendar.getListOfAllVAGNumbers("Ta9989");
-
-		for (String v : vagNumbers)
-			System.out.println("VAG # " + v);
-
-		// Show a list of all course numbers.
-		List<String> courseNumbers = new ArrayList<>();
-		courseNumbers = myCalendar.getListOfAllCourseNumbers("");
-
-		for (String v : courseNumbers)
-			System.out.println("Course # " + v);
-
-		// Show a list of all courses, sorted by VAG- number
-		List<String> courses = new ArrayList<>();
-		courses = myCalendar.getCourseList();
-
-		for (String cc : courses)
-			System.out.println(cc);
+		System.out.println("-------------------------------END OF DEMO-------------------------------------");
 
 	}
 
@@ -128,7 +181,6 @@ public class MainDemo {
 	 * 
 	 * @param e {@link CalendarEntry}
 	 */
-
 	private static void printCalendarEntry(CalendarEntry e) {
 		String date = e.getDate();
 
@@ -152,7 +204,32 @@ public class MainDemo {
 	}
 
 	/**
-	 * An example of how to get the entry with today's date.
+	 * Creates a new job schedule.
+	 * 
+	 * @param path Input file.
+	 * @return Either a {@link MakeCalendar} object or 'null' if an IO- error
+	 *         occured.
+	 */
+
+	private static MakeCalendar readJobSchedule(String path) {
+
+		MakeCalendar cal = null;
+		try {
+			InputStream inputStream;
+
+			inputStream = new FileInputStream(path);
+			cal = new MakeCalendar(inputStream);
+
+			return cal;
+
+		} catch (IOException e) {
+			System.out.println(e.toString());
+			return cal;
+		}
+	}
+
+	/**
+	 * An example on how to get the entry with today's date.
 	 */
 	public static void getEntryForToday(List<CalendarEntry> calendar) {
 
