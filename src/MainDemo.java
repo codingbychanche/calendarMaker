@@ -25,10 +25,11 @@ public class MainDemo {
 	public static void main(String args[]) {
 
 		// Load file and parse entries...
-		MakeCalendar myCalendar, mySecondCalendar;
+		MakeCalendar myCalendar = null;
+		MakeCalendar mySecondCalendar = null;
 		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 
-		// Checkm if at least one path was passed and if so, read
+		// Check if at least one path was passed and if so, read
 		if (args.length > 0) {
 			myCalendar = readJobSchedule(args[0]);
 		} else {
@@ -45,7 +46,7 @@ public class MainDemo {
 		// used to show how to calendars can be compared using
 		// this library.
 		if (args.length > 1)
-			mySecondCalendar = readJobSchedule(args[0]);
+			mySecondCalendar = readJobSchedule(args[1]);
 
 		//
 		// DEMO
@@ -54,6 +55,40 @@ public class MainDemo {
 		//
 		// Search and display todays calendar entry
 		//
+
+		System.out.println("Zwei Kalender vergleichen:");
+		System.out.println("Erster Kalender:");
+		System.out.println(myCalendar.getCalendarHeader());
+		System.out.println();
+		System.out.println("Zweiter Kalender:");
+		System.out.println(mySecondCalendar.getCalendarHeader());
+
+		List<CalendarEntry> comparedList = new ArrayList<>();
+		if (mySecondCalendar != null)
+			comparedList = myCalendar.compareThisCalWith(mySecondCalendar);
+
+		for (CalendarEntry e : comparedList) {
+			if (e.dateHasChanged() || e.startTimeHasChanged() || e.endTimeHasChanged() || e.vagNumberHasChanged() || e.courseNumberHasChanged()|| e.locationHasChanged()) {
+				System.out.print(e.getDate() + " Änderungen:");
+				if (e.dateHasChanged())
+					System.out.print("Date has changed  ");
+				if (e.startTimeHasChanged())
+					System.out.print("Start time changed  ");
+				if (e.endTimeHasChanged())
+					System.out.print("End time changed  ");
+				if (e.vagNumberHasChanged())
+					System.out.print("VAG changed  ");
+				if (e.courseNumberHasChanged())
+					System.out.print("Course number changed  ");
+				if (e.locationHasChanged())
+					System.out.print("Location changed  ");
+
+				System.out.println();
+			}
+		}
+
+		System.out.println("-------------------------------------------------------------------------------");
+
 		System.out.println("Heute:");
 		getEntryForToday(calendar);
 		System.out.println("-------------------------------------------------------------------------------");
@@ -142,15 +177,16 @@ public class MainDemo {
 			System.out.println(vagToTest + " is VAG");
 		else
 			System.out.println(vagToTest + " is not a valid VAG");
-		
+
 		System.out.println("-------------------------------------------------------------------------------");
-		
+
 		//
 		// Compare Test
 		// boolean isValidEntry, boolean isHoliday, String date, String time,
-		// String type, String courseNumber, String vagNumber, String location, String holiday,
+		// String type, String courseNumber, String vagNumber, String location, String
+		// holiday,
 		// String orgiriginalEntry
-		// 
+		//
 		System.out.println("Vergleich:");
 		CalendarEntry a = new CalendarEntry(true, false, "1.1.2029", "6:30", "UV", "BÜ221", "213456", "Karlsruhe", "b",
 				"c");

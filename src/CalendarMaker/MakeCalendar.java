@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -219,6 +220,40 @@ public class MakeCalendar {
 			hasError = true;
 			errorDescription = e.toString();
 		}
+	}
+
+	/**
+	 * Compares this instance with another instance of {@link MakeCalendar}.
+	 * 
+	 * @param calendarToCompareWith
+	 * @return A list of {@link CalendarEntry} objects with all not matching fields
+	 *         marked.<br>
+	 *         Which fields changed can be checked by in invoking the
+	 *         {@link CalendarEntry} objects dedicated getter- methods.
+	 */
+	public List<CalendarEntry> compareThisCalWith(MakeCalendar calendarToCompareWith) {
+
+		List<CalendarEntry> entrysToBeComparedList = calendarToCompareWith.getRawCalendar();
+		List<CalendarEntry> entrysComparedList = new ArrayList<>();
+		Calendar thisEntrysDate = Calendar.getInstance();
+
+		for (CalendarEntry entryOfThisCalendar : this.calendarEntrys) {
+			for (CalendarEntry entryToCompareWith : entrysToBeComparedList) {
+
+				if (entryOfThisCalendar.isValidEntry && entryToCompareWith.isValidEntry) {
+
+					Long d = entryOfThisCalendar.getEventTimeInMillisec();
+					thisEntrysDate.setTimeInMillis(d);
+					int result = entryToCompareWith.compareThisEntrysDateWith(thisEntrysDate);
+					
+					if (result == entryOfThisCalendar.HAS_SAME_DATE) {
+						entryToCompareWith.compareThisCalendarEntryWith(entryOfThisCalendar);
+						entrysComparedList.add(entryToCompareWith);
+					}
+				} 
+			}
+		}
+		return entrysComparedList;
 	}
 
 	/**

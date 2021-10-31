@@ -24,8 +24,8 @@ public class CalendarEntry {
 
 	// When comparing this entry these fields are used to descripe what has
 	// changed....
-	private boolean dateHasChanged, startTimeHasChanged, endTimeHasChanged, vagNumberHasChanged, courseNumberHasChanged,
-			locationHasChanged;
+	private boolean entryHasChanged, dateHasChanged, startTimeHasChanged, endTimeHasChanged, vagNumberHasChanged,
+			courseNumberHasChanged, locationHasChanged;
 
 	String date;
 	String time;
@@ -39,30 +39,24 @@ public class CalendarEntry {
 	/**
 	 * Creates a new entry for a {@link CalendarMaker} instance.
 	 * 
-	 * @param isValidEntry
-	 *            Must have date and course number or vag number.
-	 * @param date
-	 *            Day....
-	 * @param type
-	 *            EQ, UV etc...
-	 * @param courseNumber
-	 *            TA9989, BÜ0221 etc...
+	 * @param isValidEntry     Must have date and course number or vag number.
+	 * @param date             Day....
+	 * @param type             EQ, UV etc...
+	 * @param courseNumber     TA9989, BÜ0221 etc...
 	 * @param vagNumber
-	 * @param location
-	 *            Town etc....
-	 * @param holiday
-	 *            If the entry was marked accordingly, this is initialized....
-	 *            Remark or holidays...
-	 * @param orgiriginalEntry
-	 *            Unchanged entry from source file.
+	 * @param location         Town etc....
+	 * @param holiday          If the entry was marked accordingly, this is
+	 *                         initialized.... Remark or holidays...
+	 * @param orgiriginalEntry Unchanged entry from source file.
 	 */
-	public CalendarEntry(boolean isValidEntry, boolean isHoliday, String date, String time,
-			String type, String courseNumber, String vagNumber, String location, String holiday,
-			String orgiriginalEntry) {
+	public CalendarEntry(boolean isValidEntry, boolean isHoliday, String date, String time, String type,
+			String courseNumber, String vagNumber, String location, String holiday, String orgiriginalEntry) {
 		super();
 
+		this.entryHasChanged=false;
+		
 		this.isValidEntry = isValidEntry;
-		this.isHoliday=isHoliday;
+		this.isHoliday = isHoliday;
 
 		this.date = date;
 		this.time = time;
@@ -101,16 +95,16 @@ public class CalendarEntry {
 	/**
 	 * Gets the entry descriping this entry as an holiday.
 	 * 
-	 * @return Holiday description. 
+	 * @return Holiday description.
 	 */
 	public String getHoliday() {
 		return holiday;
 	}
-	
+
 	/**
 	 * @return True if this entry is a holiday. False if not.
 	 */
-	public boolean isHoliday(){
+	public boolean isHoliday() {
 		return isHoliday;
 	}
 
@@ -197,8 +191,8 @@ public class CalendarEntry {
 	/**
 	 * Asumes that the format of the time-string is hh.mm
 	 * 
-	 * @return Start time of he event in full hours. If time format is not
-	 *         valid, returns 0.
+	 * @return Start time of he event in full hours. If time format is not valid,
+	 *         returns 0.
 	 */
 	public int getStartTimeHours() {
 		String h[] = this.getStartTime().split("\\.");
@@ -274,8 +268,8 @@ public class CalendarEntry {
 	/**
 	 * Assumes that the format of the time-string is hh.mm
 	 * 
-	 * @return End time of he event in minutes. If time format is not valid,
-	 *         returns 0.
+	 * @return End time of he event in minutes. If time format is not valid, returns
+	 *         0.
 	 */
 	public int getEndTimeMinutes() {
 		String m[] = this.getEndTime().split("\\.");
@@ -345,6 +339,21 @@ public class CalendarEntry {
 
 		if (calendarEntryToCheck.getLocation().equals(this.getLocation()))
 			this.locationHasChanged = false;
+			
+	}
+
+	/**
+	 * @return True if one of this entry's fields have changed.
+	 */
+	public boolean entryHasChanged() {
+		return entryHasChanged;
+	}
+
+	/**
+	 * Marks this entry as changed.
+	 */
+	public void thisEntryHasChanged() {
+		entryHasChanged = true;
 	}
 
 	/**
@@ -391,15 +400,13 @@ public class CalendarEntry {
 
 	/**
 	 * Checks this entry against another {@link CalendarEntry}- Object if it is
-	 * either belonging to a weekend or it is the same day as in the object
-	 * passed.
+	 * either belonging to a weekend or it is the same day as in the object passed.
 	 * 
-	 * @param calToCheck
-	 *            {@link Calendar}- object of which the date to be compared with
-	 *            this entry is obtained from.
+	 * @param calToCheck {@link Calendar}- object of which the date to be compared
+	 *                   with this entry is obtained from.
 	 * 
-	 * @return A static value declearing this entry belonging to a weekend or it
-	 *         is the same day as given in the calendar passed.
+	 * @return A static value declearing this entry belonging to a weekend or it is
+	 *         the same day as given in the calendar passed.
 	 */
 	public int compareThisEntrysDateWith(Calendar calToCheck) {
 

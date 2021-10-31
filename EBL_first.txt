@@ -1,4 +1,4 @@
- SGF: 50 Reg: Region Südwest Lehrperson-Einsatz 16.09.21 6:30:56 
+ SGF: 50 Reg: Region Südwest Lehrperson-Einsatz 26.09.21 6:30:56 
 
 Einsatzplan für Fritz, Berthold von: 1.09.21 bis: 30.11.21
 
@@ -10,7 +10,8 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
 
 01.09.21| | 1 |15 | | |* | |UV kann verschoben werden min. 1|
 
-02.09.21| | 3 | 5 |10.00|12.15|21/22428 |Bü7000 |FA BÜW - Auftakt Komplettausbild|VS 71 Virtuelle Virtueller Raum
+
+02.09.21| | 3 | 5 |11.00|12.15|21/22421 |Bü7000 |FA BÜW - Auftakt Komplettausbild|VS 71 Virtuelle Virtueller Raum
 
  | | | | | | | |Staffel 8, Bü2753 - kontingentie|
 
@@ -34,7 +35,7 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
 
  | | | | | | | |DB Netz für RB West / (DU;KÖL) |
 
-| | 5 | 7 |12.00|15.00|21/18612 |Bü9991 |FIT BÜB/FBÜ 3UE Technik BÜW |VS 43 Virtuelle Virtueller Raum
+| | 5 | 7 |12.10|15.00|21/18612 |Bü9991 |FIT BÜB/FBÜ 3UE Technik BÜW |VS 43 Virtuelle Virtueller Raum
 
  | | | | | | | |DB Netz für RB West / (DU;KÖL;DÜ|
 
@@ -88,7 +89,6 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
 
 23.09.21| | 1 | 8 | 9.00|16.00|21/22418 |Bü7221 |FA BÜW - Fachmodul Oberbau teilv|VS 52 Virtuelle Virtueller Raum 
 
-
  | | | | | | | |Staffel 7, Bü2753 - kontingentie|
 
 24.09.21| | 1 | 8 | 9.00|16.00|21/22418 |Bü7221 |FA BÜW - Fachmodul Oberbau teilv|VS 52 Virtuelle Virtueller Raum
@@ -169,7 +169,6 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
 
  19.10.21| | 1 | 8 | 8.00|15.30|21/42689 |Ta9989 |Fortbildung für BVB im VRI |VSV01 Virtuelle Virtueller Raum 
 
-
  20.10.21| | 1 |15 | | |* | |EQ Blocker: TTT FIT BÜW 2022 (PI|
 
 21.10.21| | 1 |15 | | |* | |EQ Blocker: TTT FIT BÜW 2022 (PI|
@@ -250,8 +249,7 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
 
 14.11.21|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________ 
 
-
- 15.11.21| | 1 | 2 | 9.00|10.00|21/22424 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |114 Reg Südwes TZ Karlsruhe
+15.11.21| | 1 | 2 | 9.00|10.00|21/22424 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |114 Reg Südwes TZ Karlsruhe
 
  | | | | | | | |Staffel 7, Bü2753 - kontingentie|
 
@@ -306,5 +304,3 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
 30.11.21| | 1 | 8 | 9.00|16.00|21/22967 |Bü7105 |FA BÜW - Recht/Terminübw./Abrech|
 
 | | | | | | | |Staffel 4, Bü2751 | 
-
-
