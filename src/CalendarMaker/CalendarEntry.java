@@ -22,6 +22,7 @@ public class CalendarEntry {
 	public boolean isValidEntry;
 	public boolean isWeekend;
 	public boolean isHoliday;
+	public boolean isAnotherEventAtSameDay;
 	
 	// These two fields are needed when comparing two calendars, to detect
 	// dates which have more than one event taking place at the same date.
@@ -84,8 +85,15 @@ public class CalendarEntry {
 		return isValidEntry;
 	}
 
+	public boolean isAnotherEventAtSameDay() {
+		return isAnotherEventAtSameDay;
+	}
+	
+	public void setIsAnotherEventAtSameDay() {
+		isAnotherEventAtSameDay=true;
+	}
 	/**
-	 * This calendar entry's fate as a human readable txt string.
+	 * This calendar entry's fate as a human readable tExt string.
 	 * 
 	 * @return This entry's date.
 	 */
@@ -110,7 +118,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Gets the entry descriping this entry as an holiday.
+	 * Gets the entry describing this entry as an holiday.
 	 * 
 	 * @return Holiday description.
 	 */
@@ -179,9 +187,13 @@ public class CalendarEntry {
 		String[] d = date.split("\\.");
 
 		try {
-			if (d.length > 2)
-				return Integer.valueOf(d[2]);
-			else
+			if (d.length > 2) {
+				// In case there was an index added to the
+				// year (when more than one event takes place at the same day)
+				// extract the year.
+				String theYear[]=d[2].split(" ");
+				return Integer.valueOf(theYear[0]);
+			}else
 				return 0;
 		} catch (NumberFormatException e) {
 			return 0;
@@ -189,7 +201,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Asumes that the format of the time string is: |hh.mm|hh.mm|
+	 * Assumes that the format of the time string is: |hh.mm|hh.mm|
 	 * 
 	 * @return Start time of event in: hh.mm
 	 */
@@ -206,7 +218,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Asumes that the format of the time-string is hh.mm
+	 * Assumes that the format of the time-string is hh.mm
 	 * 
 	 * @return Start time of he event in full hours. If time format is not valid,
 	 *         returns 0.
@@ -227,7 +239,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Asumes that the format of the time-string is hh.mm
+	 * Assumes that the format of the time-string is hh.mm
 	 * 
 	 * @return Start time of he event in minutes. If time format is not valid,
 	 *         returns 0.
@@ -247,7 +259,7 @@ public class CalendarEntry {
 	}
 
 	/**
-	 * Asumes that the format of the time string is: |hh.mm|hh.mm|
+	 * Assumes that the format of the time string is: |hh.mm|hh.mm|
 	 * 
 	 * @return End time of Event in hh.mm
 	 */

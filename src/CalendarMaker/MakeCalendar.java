@@ -233,15 +233,19 @@ public class MakeCalendar {
 	 * {@link MakeCalendar}.
 	 * 
 	 * @param calendarToCompareWith An instance of {@link MakeCalendar} to compare
-	 *                              aginst this instance.
+	 *                              against this instance.
 	 * @return A list of all changed {@link CalendarEntry} objects, with all not
 	 *         matching fields marked.
 	 *         <p>
 	 * 
-	 *         For example: Whether an entrys VAG- Number has changed or not can be
+	 *         For example: Whether an entry's VAG- Number has changed or not can be
 	 *         checked by:<br>
 	 *         if ({@link calendarEntry.vagNumberHasChanged}) which is true if the
 	 *         field checked differs from the field in the other calendar<br>
+	 *         
+	 *  THIS RETURNS A LIST OF ALL CAHNGED ENTRYS. IF THE NEW THERE MORE ENTRYS IN THE
+	 *  NEW CALENDAR FILE THEN THESE ENTRYS SHOULD ALSO BE ADDED. THE SAME SHOULD BE
+	 *  DONE FOR DELETED ENTRYS........
 	 */
 	public List<CalendarEntry> compareThisCalWith(MakeCalendar calendarToCompareWith) {
 
