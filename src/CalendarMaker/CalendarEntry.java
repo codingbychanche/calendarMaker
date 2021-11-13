@@ -11,18 +11,28 @@ import java.util.Date;
  */
 public class CalendarEntry {
 
+	// When Comparing this entry to a given date, these fields represent the
+	// result
+	public static final int IS_SATURDAY = 2;
+	public static final int IS_SUNDAY = 1;
+	public static final int HAS_SAME_DATE = 3;
+	public static final int IS_NOT_TODAY_OR_WEEKEND = 4;
+
+	// General flags marking the properties of this entry.
 	public boolean isValidEntry;
 	public boolean isWeekend;
 	public boolean isHoliday;
-
-	// When Comparing this entry to a given date, these fields represent the
-	// result
-	public final int IS_SATURDAY = 2;
-	public final int IS_SUNDAY = 1;
-	public final int HAS_SAME_DATE = 3;
-	public final int IS_NOT_TODAY_OR_WEEKEND = 4;
-
-	// When comparing this entry these fields are used to descripe what has
+	
+	// These two fields are needed when comparing two calendars, to detect
+	// dates which have more than one event taking place at the same date.
+	// 
+	// The method comparing two calendar files would detect differences between
+	// such entrys because it compares one date against the same date twice.
+	//
+	public boolean isChildOfAnotherEntry; // For entrys with more than one event....
+	public boolean hasAlreadyBeenComparedToAnotherEntry; // For entrys with more than one event.
+	
+	// When comparing this entry these fields are used to describe what has
 	// changed....
 	private boolean entryHasChanged, dateHasChanged, startTimeHasChanged, endTimeHasChanged, vagNumberHasChanged,
 			courseNumberHasChanged, locationHasChanged;
@@ -53,8 +63,10 @@ public class CalendarEntry {
 			String courseNumber, String vagNumber, String location, String holiday, String orgiriginalEntry) {
 		super();
 
-		this.entryHasChanged=false;
-		
+		this.entryHasChanged = false;
+		this.isChildOfAnotherEntry=false;
+		this.hasAlreadyBeenComparedToAnotherEntry=false;
+
 		this.isValidEntry = isValidEntry;
 		this.isHoliday = isHoliday;
 
@@ -339,7 +351,6 @@ public class CalendarEntry {
 
 		if (calendarEntryToCheck.getLocation().equals(this.getLocation()))
 			this.locationHasChanged = false;
-			
 	}
 
 	/**
@@ -396,6 +407,34 @@ public class CalendarEntry {
 	 */
 	public boolean locationHasChanged() {
 		return locationHasChanged;
+	}
+	
+	
+	/**
+	 * Use this to check, if this entry is a second event taking place
+	 * at the same date as another entry in the calendar it is to be added to.
+	 * 
+	 * @return True if so, false if this is enry is a single event at a certain date.
+	 */
+	public boolean thisIsChildOfAnotherEntry() {
+		return isChildOfAnotherEntry;
+	}
+
+	/**
+	 * This must be invoked, if this entry is a second event
+	 * taking place at a certain date.
+	 */
+	public void thisEntryIsChildOfAnotherEntry() {
+		this.isChildOfAnotherEntry=true;
+	}
+	
+	
+	public boolean thisHasAlreadyBeenComparedToAnotherEntry() {
+		return hasAlreadyBeenComparedToAnotherEntry;
+	}
+
+	public void setHasAlreadyBeenComparedToAnotherEntry() {
+		this.hasAlreadyBeenComparedToAnotherEntry = true;
 	}
 
 	/**

@@ -179,7 +179,7 @@ public class MakeCalendar {
 				// Check data obtained from line just read for valid conditions
 				// and create a calendar entry.
 				//
-				if (hasDate && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
+				if (hasDate && (hasCourseNumber || hasVagNumber || hasHoliday)) {
 
 					CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday, foundDate, foundTime,
 							foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday, lineRead);
@@ -193,10 +193,11 @@ public class MakeCalendar {
 					// the strings describing a valid course, then it is declared as a valid entry
 					// for the last line with date read => another course at the same day....
 					//
-					if (hasTime && (hasCourseNumber || hasVagNumber || hasHoliday || hasType)) {
+					if (hasTime && (hasCourseNumber || hasVagNumber || hasHoliday)) {
 						CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday, lastDateRead,
 								foundTime, foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday,
 								lineRead);
+						calendarEntry.thisEntryIsChildOfAnotherEntry();
 						this.addEntry(calendarEntry);
 						numberOfLinesValid++;
 					} else {
@@ -223,13 +224,23 @@ public class MakeCalendar {
 	}
 
 	/**
-	 * Compares this instance with another instance of {@link MakeCalendar}.
+	 * Compares the data of this instance with another instance of
+	 * {@link MakeCalendar}.
 	 * 
-	 * @param calendarToCompareWith
+	 * @param calendarToCompareWith An instance of {@link MakeCalendar} to compare
+	 *                              aginst this instance.
 	 * @return A list of {@link CalendarEntry} objects with all not matching fields
-	 *         marked.<br>
-	 *         Which fields changed can be checked by in invoking the
-	 *         {@link CalendarEntry} objects dedicated getter- methods.
+	 *         marked.
+	 *         <p>
+	 * 
+	 *         Whether an entrys VAG- Number has changed or not can be checked
+	 *         by:<br>
+	 *         if ({@link calendarEntry.vagNumberHasChanged}) which is true if the
+	 *         field checked differs from the field in the other calendar<br>
+	 *         
+	 *  BUG: IF AN ENTRY HAS TWO EVENTS, THE CALENDAR HAS TWO ENTRYS WITH THE EQUAL DATE.
+	 *  SUCH ENTRYS CAN NOT BE COMPARED CORRCTLY FOR THE TIME BEEING.
+	 * 
 	 */
 	public List<CalendarEntry> compareThisCalWith(MakeCalendar calendarToCompareWith) {
 
@@ -237,20 +248,34 @@ public class MakeCalendar {
 		List<CalendarEntry> entrysComparedList = new ArrayList<>();
 		Calendar thisEntrysDate = Calendar.getInstance();
 
+		System.out.println("Cal1 size:" + entrysToBeComparedList.size());
+		System.out.println("Cal2 size:" + this.calendarEntrys.size());
+
 		for (CalendarEntry entryOfThisCalendar : this.calendarEntrys) {
 			for (CalendarEntry entryToCompareWith : entrysToBeComparedList) {
 
-				if (entryOfThisCalendar.isValidEntry && entryToCompareWith.isValidEntry) {
-
+				if (!entryToCompareWith.hasAlreadyBeenComparedToAnotherEntry) {
+					
 					Long d = entryOfThisCalendar.getEventTimeInMillisec();
 					thisEntrysDate.setTimeInMillis(d);
 					int result = entryToCompareWith.compareThisEntrysDateWith(thisEntrysDate);
 					
-					if (result == entryOfThisCalendar.HAS_SAME_DATE) {
-						entryToCompareWith.compareThisCalendarEntryWith(entryOfThisCalendar);
-						entrysComparedList.add(entryToCompareWith);
+					// Both entrys must be valid entrys in order to be compared.
+					if (entryOfThisCalendar.isValidEntry && entryToCompareWith.isValidEntry) {
+
+						if (result == entryOfThisCalendar.HAS_SAME_DATE) {
+							entryToCompareWith.compareThisCalendarEntryWith(entryOfThisCalendar);
+							entryToCompareWith.setHasAlreadyBeenComparedToAnotherEntry();
+							entrysComparedList.add(entryToCompareWith);
+						}
+					} else {
+						
+						// Do not compare, just add.
+						if (result == entryOfThisCalendar.HAS_SAME_DATE) {
+							entrysComparedList.add(entryToCompareWith);
+						}
 					}
-				} 
+				}
 			}
 		}
 		return entrysComparedList;

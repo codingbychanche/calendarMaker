@@ -21,13 +21,13 @@ import CalendarMaker.*;
 public class MainDemo {
 
 	static String path, path2;
+	static boolean compareTwoCalandarsIsPossible = false;
 
 	public static void main(String args[]) {
 
 		// Load file and parse entries...
 		MakeCalendar myCalendar = null;
 		MakeCalendar mySecondCalendar = null;
-		List<CalendarEntry> calendar = new ArrayList<CalendarEntry>();
 
 		// Check if at least one path was passed and if so, read
 		if (args.length > 0) {
@@ -45,8 +45,10 @@ public class MainDemo {
 		// The second file read, second calendar created is
 		// used to show how to calendars can be compared using
 		// this library.
-		if (args.length > 1)
+		if (args.length > 1) {
 			mySecondCalendar = readJobSchedule(args[1]);
+			compareTwoCalandarsIsPossible = true;
+		}
 
 		//
 		// DEMO
@@ -55,42 +57,50 @@ public class MainDemo {
 		//
 		// Search and display todays calendar entry
 		//
+		if (compareTwoCalandarsIsPossible) {
+			System.out.println("Zwei Kalender vergleichen:");
+			System.out.println("Erster Kalender:");
+			System.out.println(myCalendar.getCalendarHeader());
+			System.out.println();
+			System.out.println("Zweiter Kalender:");
+			System.out.println(mySecondCalendar.getCalendarHeader());
 
-		System.out.println("Zwei Kalender vergleichen:");
-		System.out.println("Erster Kalender:");
-		System.out.println(myCalendar.getCalendarHeader());
-		System.out.println();
-		System.out.println("Zweiter Kalender:");
-		System.out.println(mySecondCalendar.getCalendarHeader());
+			List<CalendarEntry> comparedList = new ArrayList<>();
 
-		List<CalendarEntry> comparedList = new ArrayList<>();
-		if (mySecondCalendar != null)
 			comparedList = myCalendar.compareThisCalWith(mySecondCalendar);
 
-		for (CalendarEntry e : comparedList) {
-			if (e.dateHasChanged() || e.startTimeHasChanged() || e.endTimeHasChanged() || e.vagNumberHasChanged() || e.courseNumberHasChanged()|| e.locationHasChanged()) {
-				System.out.print(e.getDate() + " Änderungen:");
-				if (e.dateHasChanged())
-					System.out.print("Date has changed  ");
-				if (e.startTimeHasChanged())
-					System.out.print("Start time changed  ");
-				if (e.endTimeHasChanged())
-					System.out.print("End time changed  ");
-				if (e.vagNumberHasChanged())
-					System.out.print("VAG changed  ");
-				if (e.courseNumberHasChanged())
-					System.out.print("Course number changed  ");
-				if (e.locationHasChanged())
-					System.out.print("Location changed  ");
+			System.out.println("Result has:" + comparedList.size());
 
-				System.out.println();
+			for (CalendarEntry e : comparedList) {
+				// Show only the entrys which differ.....
+				if (e.dateHasChanged() || e.startTimeHasChanged() || e.endTimeHasChanged() || e.vagNumberHasChanged()
+						|| e.courseNumberHasChanged() || e.locationHasChanged()) {
+					System.out.print(e.getDate() + " Änderungen:");
+					if (e.dateHasChanged())
+						System.out.print("Date has changed  ");
+					if (e.startTimeHasChanged())
+						System.out.print("Start time changed  ");
+					if (e.endTimeHasChanged())
+						System.out.print("End time changed  ");
+					if (e.vagNumberHasChanged())
+						System.out.print("VAG changed  ");
+					if (e.courseNumberHasChanged())
+						System.out.print("Course number changed  ");
+					if (e.locationHasChanged())
+						System.out.print("Location changed  ");
+					System.out.println();
+				}
+			}
+			
+			// Show all entrys
+			for (CalendarEntry e : comparedList) {
+				System.out.println(e.getDate());
 			}
 		}
 
 		System.out.println("-------------------------------------------------------------------------------");
-
 		System.out.println("Heute:");
-		getEntryForToday(calendar);
+		getEntryForToday(myCalendar.getRawCalendar());
 		System.out.println("-------------------------------------------------------------------------------");
 
 		//
@@ -108,7 +118,7 @@ public class MainDemo {
 		// Get and display all entries...
 		//
 		System.out.println("Alle Einträge:");
-		for (CalendarEntry e : calendar) {
+		for (CalendarEntry e : myCalendar.getRawCalendar()) {
 			if (e.isValidEntry)
 				printCalendarEntry(e);
 		}
