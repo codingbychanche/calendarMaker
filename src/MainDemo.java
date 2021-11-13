@@ -93,9 +93,9 @@ public class MainDemo {
 			}
 			
 			// Show all entrys
-			for (CalendarEntry e : comparedList) {
-				System.out.println(e.getDate());
-			}
+			//for (CalendarEntry e : comparedList) {
+			//	System.out.println(e.getDate());
+			//}
 		}
 
 		System.out.println("-------------------------------------------------------------------------------");

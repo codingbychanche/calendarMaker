@@ -194,9 +194,14 @@ public class MakeCalendar {
 					// for the last line with date read => another course at the same day....
 					//
 					if (hasTime && (hasCourseNumber || hasVagNumber || hasHoliday)) {
-						CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday, lastDateRead,
-								foundTime, foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday,
-								lineRead);
+
+						// If two events take place at the same day,
+						// this marker is added to to date in order to make the events unique.
+						String dateIndex = " +";
+
+						CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday,
+								lastDateRead + dateIndex, foundTime, foundType, foundCourseNumber, foundVagNumber,
+								foundLocation, foundHoliday, lineRead);
 						calendarEntry.thisEntryIsChildOfAnotherEntry();
 						this.addEntry(calendarEntry);
 						numberOfLinesValid++;
@@ -229,51 +234,30 @@ public class MakeCalendar {
 	 * 
 	 * @param calendarToCompareWith An instance of {@link MakeCalendar} to compare
 	 *                              aginst this instance.
-	 * @return A list of {@link CalendarEntry} objects with all not matching fields
-	 *         marked.
+	 * @return A list of all changed {@link CalendarEntry} objects, with all not
+	 *         matching fields marked.
 	 *         <p>
 	 * 
-	 *         Whether an entrys VAG- Number has changed or not can be checked
-	 *         by:<br>
+	 *         For example: Whether an entrys VAG- Number has changed or not can be
+	 *         checked by:<br>
 	 *         if ({@link calendarEntry.vagNumberHasChanged}) which is true if the
 	 *         field checked differs from the field in the other calendar<br>
-	 *         
-	 *  BUG: IF AN ENTRY HAS TWO EVENTS, THE CALENDAR HAS TWO ENTRYS WITH THE EQUAL DATE.
-	 *  SUCH ENTRYS CAN NOT BE COMPARED CORRCTLY FOR THE TIME BEEING.
-	 * 
 	 */
 	public List<CalendarEntry> compareThisCalWith(MakeCalendar calendarToCompareWith) {
 
 		List<CalendarEntry> entrysToBeComparedList = calendarToCompareWith.getRawCalendar();
 		List<CalendarEntry> entrysComparedList = new ArrayList<>();
-		Calendar thisEntrysDate = Calendar.getInstance();
-
-		System.out.println("Cal1 size:" + entrysToBeComparedList.size());
-		System.out.println("Cal2 size:" + this.calendarEntrys.size());
 
 		for (CalendarEntry entryOfThisCalendar : this.calendarEntrys) {
 			for (CalendarEntry entryToCompareWith : entrysToBeComparedList) {
 
-				if (!entryToCompareWith.hasAlreadyBeenComparedToAnotherEntry) {
-					
-					Long d = entryOfThisCalendar.getEventTimeInMillisec();
-					thisEntrysDate.setTimeInMillis(d);
-					int result = entryToCompareWith.compareThisEntrysDateWith(thisEntrysDate);
-					
-					// Both entrys must be valid entrys in order to be compared.
-					if (entryOfThisCalendar.isValidEntry && entryToCompareWith.isValidEntry) {
+				// Both entrys must be valid entrys in order to be compared.
+				if (entryOfThisCalendar.isValidEntry && entryToCompareWith.isValidEntry) {
 
-						if (result == entryOfThisCalendar.HAS_SAME_DATE) {
-							entryToCompareWith.compareThisCalendarEntryWith(entryOfThisCalendar);
-							entryToCompareWith.setHasAlreadyBeenComparedToAnotherEntry();
-							entrysComparedList.add(entryToCompareWith);
-						}
-					} else {
-						
-						// Do not compare, just add.
-						if (result == entryOfThisCalendar.HAS_SAME_DATE) {
-							entrysComparedList.add(entryToCompareWith);
-						}
+					if (entryOfThisCalendar.getDate().equals(entryToCompareWith.getDate())) {
+						// if (result == entryOfThisCalendar.HAS_SAME_DATE) {
+						entryToCompareWith.compareThisCalendarEntryWith(entryOfThisCalendar);
+						entrysComparedList.add(entryToCompareWith);
 					}
 				}
 			}

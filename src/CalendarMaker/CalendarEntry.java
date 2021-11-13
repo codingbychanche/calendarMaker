@@ -84,6 +84,11 @@ public class CalendarEntry {
 		return isValidEntry;
 	}
 
+	/**
+	 * This calendar entry's fate as a human readable txt string.
+	 * 
+	 * @return This entry's date.
+	 */
 	public String getDate() {
 		return date;
 	}
@@ -426,15 +431,6 @@ public class CalendarEntry {
 	 */
 	public void thisEntryIsChildOfAnotherEntry() {
 		this.isChildOfAnotherEntry=true;
-	}
-	
-	
-	public boolean thisHasAlreadyBeenComparedToAnotherEntry() {
-		return hasAlreadyBeenComparedToAnotherEntry;
-	}
-
-	public void setHasAlreadyBeenComparedToAnotherEntry() {
-		this.hasAlreadyBeenComparedToAnotherEntry = true;
 	}
 
 	/**

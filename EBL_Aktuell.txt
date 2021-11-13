@@ -148,6 +148,7 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
  | | | | | | | |Staffel 7, Bü2753 - kontingentie|
 
 | | 3 |10 |10.00|17.01|21/22425 |Bü0226 |FA BÜW - Fachmodul MKS/DAS |114 Reg Südwes TZ Karlsruhe
+| | 3 |10 |10.10|17.01|21/22425 |Bü0226 |FA BÜW - Fachmodul MKS/DAS |114 Reg Südwes TZ Karlsruhe
 
  | | | | | | | |Staffel 7, Bü2753 - kontingentie|
 
