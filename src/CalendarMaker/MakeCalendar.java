@@ -46,7 +46,7 @@ public class MakeCalendar {
 
 	public static final Pattern datePattern = Pattern.compile("(\\d{1,2}\\.){2}\\d{2,4}");
 
-	public static final Pattern courseNumberPattern = Pattern.compile("((.){2}\\d{4})");
+	public static final Pattern courseNumberPattern = Pattern.compile("(?i)((.){2}\\d{4})");
 
 	public static final Pattern vagNumberPattern = Pattern.compile("\\d{2}/\\d{4,}");
 
