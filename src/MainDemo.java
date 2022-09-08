@@ -72,7 +72,7 @@ public class MainDemo {
 			System.out.println("Result has:" + comparedList.size());
 
 			for (CalendarEntry e : comparedList) {
-				// Show only the entrys which differ.....
+				// Show only the entries which differ.....
 				if (e.dateHasChanged() || e.startTimeHasChanged() || e.endTimeHasChanged() || e.vagNumberHasChanged()
 						|| e.courseNumberHasChanged() || e.locationHasChanged()) {
 					System.out.print(e.getDate() + " Änderungen:");
@@ -91,11 +91,6 @@ public class MainDemo {
 					System.out.println();
 				}
 			}
-			
-			// Show all entrys
-			//for (CalendarEntry e : comparedList) {
-			//	System.out.println(e.getDate());
-			//}
 		}
 
 		System.out.println("-------------------------------------------------------------------------------");
@@ -114,6 +109,7 @@ public class MainDemo {
 		System.out.println("Valid:" + myCalendar.getNumberOfLinesValid());
 		System.out.println("Not Valid:" + myCalendar.getNumberOfLinesNotValid());
 		System.out.println("-------------------------------------------------------------------------------");
+		
 		//
 		// Get and display all entries...
 		//
@@ -254,9 +250,8 @@ public class MainDemo {
 	 * 
 	 * @param path Input file.
 	 * @return Either a {@link MakeCalendar} object or 'null' if an IO- error
-	 *         occured.
+	 *         occurred.
 	 */
-
 	private static MakeCalendar readJobSchedule(String path) {
 
 		MakeCalendar cal = null;
@@ -307,7 +302,6 @@ public class MainDemo {
 				System.out.println("Today is a sunday, have fun!");
 				break;
 			}
-
 		}
 	}
 }
