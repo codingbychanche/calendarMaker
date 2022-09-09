@@ -1,0 +1,282 @@
+ SGF: 50 Reg: Region Südwest Lehrperson-Einsatz 1.09.22 6:30:55 
+
+Einsatzplan für Fritz, Berthold von: 1.09.22 bis: 30.11.22
+
+ Berthold.B.Fritz@deutschebahn.com
+
+Datum |U|Stunde |Uhrzeit |Veranst.Nr|Produkt|Veranstaltung / Ausfall/Einsatz |Lehrraum / Ort / andere LPS, LBA
+
+________|_|ab_|bis|ab___|bis__|__________|_______|________________________________|________________________________________________
+
+01.09.22| | 2 | 9 | |16.00|22/76882 |Ta7371 |Bauen unter Eisenbahnbetrieb |SCHLEITH GmbH Baugesellschaft;Achern
+
+| | | | | | | |SCHLEITH GmbH Baugesellschaft |
+
+02.09.22|_|_1_|15_|_____|_____|*_________|_______|KL_Bü7106/5_22/6666/6667_MS_9521|________________________________________________
+
+03.09.22| | | | | | | | |
+
+04.09.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+05.09.22| | 1 | 8 | | |* | |TR Auftrag: 18097| PP0060 |
+
+06.09.22| | 1 |15 | | |* | |RA Anreise Chemnitz |
+
+07.09.22| | 1 | 8 | 8.00| |22/75105 |Ta0734 |Einführung der EIGV |DB RegioNetz,Bahnhofstr.7 09111 Chemnitz
+
+| | | | | | | |DB Regio Netz Verkehrs GmbH |
+
+08.09.22| | 1 | 8 | |15.30|22/75105 |Ta0734 |Einführung der EIGV |DB RegioNetz,Bahnhofstr.7 09111 Chemnitz
+
+| | | | | | | |DB Regio Netz Verkehrs GmbH |
+
+09.09.22|_|_1_|15_|_____|_____|*_________|_______|RA_Abreise_Chemnitz_____________|________________________________________________
+
+10.09.22| | | | | | | | |
+
+11.09.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+12.09.22| | 1 | 8 | 8.00|15.30|22/16305 |Ta9989 |Fortbildung für BVB im VRI |VSV03 Virtuelle Virtueller Raum
+
+ 13.09.22| | 1 |15 | | |* | |RE ggf. Bü0002/Krell |
+
+14.09.22| | 2 | 9 | 8.00|17.00|22/6711 |Bü7105 |FA BÜW - Recht/Terminübw./Abrech|VS 76 Virtuelle Virtueller Raum
+
+ | | | | | | | |Staffel 8, Bü2753 - kontingentie|
+
+15.09.22| | 2 | 8 | 8.00|15.00|22/6711 |Bü7105 |FA BÜW - Recht/Terminübw./Abrech|VS 76 Virtuelle Virtueller Raum
+
+ | | | | | | | |Staffel 8, Bü2753 - kontingentie|
+
+16.09.22|_|_1_|_8_|_____|_____|*_________|_______|EQ_EQ_Einweisung_dv-gestützte/Kr|________________________________________________
+
+17.09.22| | | | | | | | |
+
+18.09.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+19.09.22| | 1 |15 | | |* | |FB FB BÜW, Bezirksleiter, Ingeni|
+
+20.09.22| | 1 |15 | | |* | |Teilnahme an Fachbesprechungen |
+
+21.09.22| | 1 |15 | | |* | |RA vsl. Rückreise (NBr) |
+
+22.09.22| | 1 | 6 | | |* | |FB FB BÜW KIB F.Dangel 9-13 |
+
+23.09.22|_|_1_|15_|_____|_____|*_________|_______|KL_Bü0221_VAG_22/6605/Krell_9992|________________________________________________
+
+24.09.22| | | | | | | | |
+
+25.09.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+26.09.22| | 2 | 9 | 9.00|16.30|22/16980 |Ta9989 |Fortbildung für BVB im VRI |VS 49 Virtuelle Virtueller Raum
+
+ 27.09.22| | 2 | 9 | 9.00|16.30|22/16981 |Ta9989 |Fortbildung für BVB im VRI |VS 42 Virtuelle Virtueller Raum
+
+ 28.09.22| | 1 |15 | | |* | |KL Bü7105/06 VAG 22/6710/Krell 9|
+
+29.09.22| | 1 |15 | | |* | |RE Bü0002 DB Netz Coaching PL |
+
+30.09.22|_|_1_|15_|_____|_____|*_________|_______|RE_Bü0002_DB_Netz_Coaching_PL___|________________________________________________
+
+01.10.22| | | | | | | | |
+
+02.10.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+03.10.22| | 1 |15 | | |* | |Feiertag |
+
+04.10.22| | 1 |15 | | |* | |KL Bü0221 VAG 22/6605/Krell 9992|
+
+05.10.22| | 2 | 2 | 9.00|10.30|22/6670 |Bü7103 |FA BÜW - ALB in der Nähe OL virt|114 Reg Südwes TZ Karlsruhe 
+
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+| | 4 |10 |11.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+06.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+07.10.22| | 2 | 6 | 8.00|14.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ ________|_|___|___|_____|_____|__________|_______|Staffel_7,_Bü2753_-_frei_buchbar|________________________________________________
+
+08.10.22| | | | | | | | |
+
+09.10.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+10.10.22| | 4 |10 |11.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+11.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+12.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+13.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+14.10.22| | 2 | 6 | 8.00|14.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ ________|_|___|___|_____|_____|__________|_______|Staffel_7,_Bü2753_-_frei_buchbar|________________________________________________
+
+15.10.22| | | | | | | | |
+
+16.10.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+17.10.22| | 4 |10 |11.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+18.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+19.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+20.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+21.10.22| | 2 | 6 | 8.00|14.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ ________|_|___|___|_____|_____|__________|_______|Staffel_7,_Bü2753_-_frei_buchbar|________________________________________________
+
+22.10.22| | | | | | | | |
+
+23.10.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+24.10.22| | 4 |10 |11.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+25.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+26.10.22| | 2 |10 | 8.00|17.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+27.10.22| | 2 | 6 | 8.00|14.00|22/6684 |Bü0221 |FA BÜW - Fachmodul Oberbau |114 Reg Südwes TZ Karlsruhe 
+
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+28.10.22|_|_1_|15_|_____|_____|*_________|_______|KL_Bü0221_VAG_22/6684/Krell_9992|________________________________________________
+
+29.10.22| | | | | | | | |
+
+30.10.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+31.10.22| | 1 |15 | | |* | |KL Bü0221 VAG 22/6684/Krell 9992|
+
+01.11.22| | 1 |15 | | |* | |Feiertag |
+
+02.11.22| | 2 |10 | 9.00|17.00|22/6638 |Bü0227 |FA BÜW - Fachmodul dv-gest. Insp|
+
+| | | | | | | |Staffel 6, Bü2753 - frei buchbar|
+
+03.11.22| | 2 |10 | 8.00|17.00|22/6638 |Bü0227 |FA BÜW - Fachmodul dv-gest. Insp|
+
+| | | | | | | |Staffel 6, Bü2753 - frei buchbar|
+
+04.11.22| | 2 | 7 | 8.00|15.00|22/6638 |Bü0227 |FA BÜW - Fachmodul dv-gest. Insp|
+
+________|_|___|___|_____|_____|__________|_______|Staffel_6,_Bü2753_-_frei_buchbar|________________________________________________
+
+05.11.22| | | | | | | | |
+
+06.11.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+07.11.22| | 2 | 9 | 9.00|16.00|22/6705 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |VS 75 Virtuelle Virtueller Raum
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+08.11.22| | 2 | 9 | 9.00|16.00|22/6705 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |VS 75 Virtuelle Virtueller Raum
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+09.11.22| | 2 | 9 | 9.00|16.00|22/6705 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |VS 75 Virtuelle Virtueller Raum
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+10.11.22| | 2 | 9 | 9.00|16.00|22/6705 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |VS 75 Virtuelle Virtueller Raum
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+11.11.22| | 2 | 9 | 9.00|16.00|22/6705 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |VS 75 Virtuelle Virtueller Raum
+
+ ________|_|___|___|_____|_____|__________|_______|Staffel_7,_Bü2753_-_frei_buchbar|________________________________________________
+
+12.11.22| | | | | | | | |
+
+13.11.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+14.11.22| | 1 |15 | | |* | |KL Bü0225 VAG 22/6705/Krell 9992|
+
+15.11.22| | 1 | 8 | | |* | |RE Bü0002 DB Netz Coaching PL |
+
+16.11.22| | 1 | 8 | 8.00|15.30|22/75087 |Ta9983 |Fortbildung IBV/BVB nur für DB |VS 49 Virtuelle Virtueller Raum
+
+ | | | | | | | |DB Energie GmbH |
+
+17.11.22| | 1 |15 | | |* | |KL Bü0227 VAG 22/6638/Krell 9992|
+
+18.11.22| | 2 | 9 | 9.00|16.30|22/32210 |Ta9989 |Fortbildung für BVB im VRI |
+
+________|_|___|___|_____|_____|__________|_______|nur_für__DB_Netz_AG,_I.NA-SW-P_3|________________________________________________
+
+19.11.22| | | | | | | | |
+
+20.11.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+21.11.22| | 2 | 9 | 9.00|17.00|22/6705 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |203 Reg West TZ Witten
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+22.11.22| | 1 | 4 | 8.00| 9.30|22/6705 |Bü7225 |FA BÜW - Fachmodul KIB virtuell |203 Reg West TZ Witten
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+23.11.22| | 2 |10 | 9.00|17.00|22/6706 |Bü0227 |FA BÜW - Fachmodul dv-gest. Insp|203 Reg West TZ Witten 
+
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+24.11.22| | 2 |10 | 8.00|17.00|22/6706 |Bü0227 |FA BÜW - Fachmodul dv-gest. Insp|203 Reg West TZ Witten
+
+ | | | | | | | |Staffel 7, Bü2753 - frei buchbar|
+
+25.11.22| | 2 | 7 | 8.00|15.00|22/6706 |Bü0227 |FA BÜW - Fachmodul dv-gest. Insp|203 Reg West TZ Witten
+
+ ________|_|___|___|_____|_____|__________|_______|Staffel_7,_Bü2753_-_frei_buchbar|________________________________________________
+
+26.11.22| | | | | | | | |
+
+27.11.22|_|___|___|_____|_____|__________|_______|________________________________|________________________________________________
+
+28.11.22| | 2 | 9 | 9.00|16.30|22/16306 |Ta9989 |Fortbildung für BVB im VRI |
+
+29.11.22| | 2 | 3 | 9.00|10.30|22/6808 |Bü7102 |FA BÜW - Sicherungsüberwacher vi|109 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 9, Bü2753 - kontingentie|
+
+| | 4 |10 |11.00|17.00|22/6810 |Bü0221 |FA BÜW - Fachmodul Oberbau |109 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 9, Bü2753 - kontingentie|
+
+30.11.22| | 2 |10 | 8.00|17.00|22/6810 |Bü0221 |FA BÜW - Fachmodul Oberbau |109 Reg Südwes TZ Karlsruhe
+
+ | | | | | | | |Staffel 9, Bü2753 - kontingentie| 
+
+

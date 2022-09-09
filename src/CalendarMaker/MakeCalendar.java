@@ -59,8 +59,10 @@ public class MakeCalendar {
 					+ "(Witten)|(Fulda)|(Virtueller Raum)|(Online)|(K.ln)|(Bad Homburg)");
 
 	public static final Pattern holidayPattern = Pattern.compile("(?i)(urlaub)");
+
 	public static final Pattern typePattern = Pattern.compile("(?i)(re)|(uv)|(kl)|(eq)|(up)|(arbeitszeitausgleich)");
 
+	public static final Pattern travelDayPattern = Pattern.compile("(?i)\\w+(reise)\\w+");
 	//
 	// Result
 	//
@@ -68,7 +70,7 @@ public class MakeCalendar {
 	static final boolean IS_INVALID_ENTRY = false;
 
 	String calendarHeader, revisionDate, revisionTime, foundDate, foundTime, foundVagNumber, foundCourseNumber,
-			foundLocation, foundHoliday, foundType;
+			foundLocation, foundHoliday, foundTravelDay, foundType;
 
 	//
 	// Let us remember the last date read in case we found a line without a date
@@ -78,7 +80,7 @@ public class MakeCalendar {
 	String lastDateRead;
 
 	// Tells us what we have found inside the last line read.
-	boolean hasDate, hasTime, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasType;
+	boolean hasDate, hasTime, hasCourseNumber, hasVagNumber, hasHoliday, hasLocation, hasTravelDay, hasType;
 
 	//
 	// Error
@@ -113,8 +115,8 @@ public class MakeCalendar {
 				//
 				// Check line read for entries that form a valid calendar entry
 				//
-				hasDate = hasTime = hasVagNumber = hasCourseNumber = hasLocation = hasHoliday = hasType = false;
-				foundDate = foundTime = foundCourseNumber = foundVagNumber = foundLocation = foundHoliday = foundType = "-";
+				hasDate = hasTime = hasVagNumber = hasCourseNumber = hasLocation = hasHoliday =hasTravelDay= hasType = false;
+				foundDate = foundTime = foundCourseNumber = foundVagNumber = foundLocation =foundTravelDay=foundHoliday = foundType = "-";
 
 				// Collect calendars header information
 				matcher = claendarHeaderPattern.matcher(lineRead);
@@ -174,15 +176,22 @@ public class MakeCalendar {
 					foundType = matcher.group(0);
 					hasType = true;
 				}
+				
+
+				matcher = travelDayPattern.matcher(lineRead);
+				while (matcher.find()) {
+					foundTravelDay = matcher.group(0);
+					hasTravelDay= true;
+				}
 
 				//
 				// Check data obtained from line just read for valid conditions
 				// and create a calendar entry.
 				//
-				if (hasDate && (hasCourseNumber || hasVagNumber || hasHoliday)) {
+				if (hasDate && (hasCourseNumber || hasVagNumber || hasHoliday || hasTravelDay)) {
 
 					CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday, foundDate, foundTime,
-							foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday, lineRead);
+							foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday,foundTravelDay, lineRead);
 					this.addEntry(calendarEntry);
 					numberOfLinesValid++;
 				} else {
@@ -201,7 +210,7 @@ public class MakeCalendar {
 
 						CalendarEntry calendarEntry = new CalendarEntry(IS_VALID_ENTRY, hasHoliday,
 								lastDateRead + dateIndex, foundTime, foundType, foundCourseNumber, foundVagNumber,
-								foundLocation, foundHoliday, lineRead);
+								foundLocation,foundHoliday,foundTravelDay, lineRead);
 						calendarEntry.thisEntryIsChildOfAnotherEntry();
 						this.addEntry(calendarEntry);
 						numberOfLinesValid++;
@@ -213,7 +222,7 @@ public class MakeCalendar {
 						// Store line, let the user decide...
 						//
 						CalendarEntry calendarEntry = new CalendarEntry(IS_INVALID_ENTRY, hasHoliday, foundDate,
-								foundTime, foundType, foundCourseNumber, foundVagNumber, foundLocation, foundHoliday,
+								foundTime, foundType, foundCourseNumber, foundVagNumber, foundLocation,foundHoliday, foundTravelDay,
 								lineRead);
 						this.addEntry(calendarEntry);
 						numberOfLinesNotValid++;
@@ -242,10 +251,10 @@ public class MakeCalendar {
 	 *         checked by:<br>
 	 *         if ({@link calendarEntry.vagNumberHasChanged}) which is true if the
 	 *         field checked differs from the field in the other calendar<br>
-	 *         
-	 *  THIS RETURNS A LIST OF ALL CAHNGED ENTRYS. IF THE NEW THERE MORE ENTRYS IN THE
-	 *  NEW CALENDAR FILE THEN THESE ENTRYS SHOULD ALSO BE ADDED. THE SAME SHOULD BE
-	 *  DONE FOR DELETED ENTRYS........
+	 * 
+	 *         THIS RETURNS A LIST OF ALL CAHNGED ENTRYS. IF THE NEW THERE MORE
+	 *         ENTRYS IN THE NEW CALENDAR FILE THEN THESE ENTRYS SHOULD ALSO BE
+	 *         ADDED. THE SAME SHOULD BE DONE FOR DELETED ENTRYS........
 	 */
 	public List<CalendarEntry> compareThisCalWith(MakeCalendar calendarToCompareWith) {
 

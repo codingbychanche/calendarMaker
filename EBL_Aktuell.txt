@@ -8,7 +8,7 @@ Datum |U|Stunde |Uhrzeit |Veranst.Nr|Produkt|Veranstaltung / Ausfall/Einsatz |Le
 
 ________|_|ab_|bis|ab___|bis__|__________|_______|________________________________|________________________________________________
 
-01.10.21| | 1 | 9 | 9.00|16.00|21/22418 |Bü7221 |FA BÜW - Fachmodul Oberbau teilv|VS 52 Virtuelle Virtueller Raum
+01.10.21| | 1 | 9 | 9.00|16.00|21/22418 |Bü7221 |Abreise FA BÜW - Fachmodul Oberbau teilv|VS 52 Virtuelle Virtueller Raum
 
  ________|_|___|___|_____|_____|__________|_______|Staffel_7,_Bü2753_-_kontingentie|________________________________________________
 
@@ -22,7 +22,7 @@ ________|_|ab_|bis|ab___|bis__|__________|_______|______________________________
 
 | | 4 |10 |11.00|17.00|21/22418 |Bü7221 |FA BÜW - Fachmodul Oberbau teilv|109 Reg Südwes TZ Karlsruhe
 
- | | | | | | | |Staffel 7, Bü2753 - kontingentie|
+ | | | | | | | |Staffel 7, Bü2753 - kontingenti|Abreise Hong Kong|
 
 05.10.21| | 1 | 8 | 8.00|16.00|21/22418 |Bü7221 |FA BÜW - Fachmodul Oberbau teilv|109 Reg Südwes TZ Karlsruhe
 

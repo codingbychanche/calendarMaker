@@ -195,9 +195,9 @@ public class MainDemo {
 		//
 		System.out.println("Vergleich:");
 		CalendarEntry a = new CalendarEntry(true, false, "1.1.2029", "6:30", "UV", "BÜ221", "213456", "Karlsruhe", "b",
-				"c");
+				"c","d");
 		CalendarEntry b = new CalendarEntry(true, false, "1.1.2029", "6:31", "UV", "BÜ222", "213453", "Karlsruhe", "b",
-				"c");
+				"c","d");
 
 		a.compareThisCalendarEntryWith(b);
 
@@ -232,6 +232,7 @@ public class MainDemo {
 		String vagNumber = e.getVagNumber();
 		String location = e.getLocation();
 		String holiday = e.getHoliday();
+		String travelDay=e.getTravelDay();
 		String type = e.getType();
 		int day = e.getDay();
 		int month = e.getMonth();
@@ -239,7 +240,7 @@ public class MainDemo {
 		String sourceLine = e.getOrgiriginalEntry();
 
 		String line = "Day:" + day + " Month:" + month + " Year:" + year + " " + date + "  Start:" + startTime + " End:"
-				+ endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + "  " + holiday + "   " + type
+				+ endTime + "  " + courseNumber + "  " + vagNumber + "  " + location + " Reise:"+travelDay+"    "+holiday + "   " + type
 				+ "\n" + sourceLine + "\n";
 
 		System.out.println(ConvertUmlaut.toHtml(line));

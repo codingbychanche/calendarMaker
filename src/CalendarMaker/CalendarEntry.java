@@ -23,16 +23,16 @@ public class CalendarEntry {
 	public boolean isWeekend;
 	public boolean isHoliday;
 	public boolean isAnotherEventAtSameDay;
-	
+
 	// These two fields are needed when comparing two calendars, to detect
 	// dates which have more than one event taking place at the same date.
-	// 
+	//
 	// The method comparing two calendar files would detect differences between
 	// such entrys because it compares one date against the same date twice.
 	//
 	public boolean isChildOfAnotherEntry; // For entrys with more than one event....
 	public boolean hasAlreadyBeenComparedToAnotherEntry; // For entrys with more than one event.
-	
+
 	// When comparing this entry these fields are used to describe what has
 	// changed....
 	private boolean entryHasChanged, dateHasChanged, startTimeHasChanged, endTimeHasChanged, vagNumberHasChanged,
@@ -45,6 +45,7 @@ public class CalendarEntry {
 	String vagNumber; // VAG------
 	String location;
 	String holiday;
+	String travelDay;
 	String orgiriginalEntry; // Complete entry from source file.
 
 	/**
@@ -58,15 +59,18 @@ public class CalendarEntry {
 	 * @param location         Town etc....
 	 * @param holiday          If the entry was marked accordingly, this is
 	 *                         initialized.... Remark or holidays...
+	 * @param travelDay        If this entry is a travel day, this string describes
+	 *                         it...
 	 * @param orgiriginalEntry Unchanged entry from source file.
 	 */
 	public CalendarEntry(boolean isValidEntry, boolean isHoliday, String date, String time, String type,
-			String courseNumber, String vagNumber, String location, String holiday, String orgiriginalEntry) {
+			String courseNumber, String vagNumber, String location, String holiday, String travelDay,
+			String orgiriginalEntry) {
 		super();
 
 		this.entryHasChanged = false;
-		this.isChildOfAnotherEntry=false;
-		this.hasAlreadyBeenComparedToAnotherEntry=false;
+		this.isChildOfAnotherEntry = false;
+		this.hasAlreadyBeenComparedToAnotherEntry = false;
 
 		this.isValidEntry = isValidEntry;
 		this.isHoliday = isHoliday;
@@ -78,6 +82,7 @@ public class CalendarEntry {
 		this.vagNumber = vagNumber;
 		this.location = location;
 		this.holiday = holiday;
+		this.travelDay = travelDay;
 		this.orgiriginalEntry = orgiriginalEntry;
 	}
 
@@ -88,15 +93,11 @@ public class CalendarEntry {
 	public boolean isAnotherEventAtSameDay() {
 		return isAnotherEventAtSameDay;
 	}
-	
+
 	public void setIsAnotherEventAtSameDay() {
-		isAnotherEventAtSameDay=true;
+		isAnotherEventAtSameDay = true;
 	}
-	/**
-	 * This calendar entry's fate as a human readable tExt string.
-	 * 
-	 * @return This entry's date.
-	 */
+
 	public String getDate() {
 		return date;
 	}
@@ -111,6 +112,10 @@ public class CalendarEntry {
 
 	public String getVagNumber() {
 		return vagNumber;
+	}
+
+	public String getTravelDay() {
+		return travelDay;
 	}
 
 	public String getLocation() {
@@ -191,9 +196,9 @@ public class CalendarEntry {
 				// In case there was an index added to the
 				// year (when more than one event takes place at the same day)
 				// extract the year.
-				String theYear[]=d[2].split(" ");
+				String theYear[] = d[2].split(" ");
 				return Integer.valueOf(theYear[0]);
-			}else
+			} else
 				return 0;
 		} catch (NumberFormatException e) {
 			return 0;
@@ -425,24 +430,24 @@ public class CalendarEntry {
 	public boolean locationHasChanged() {
 		return locationHasChanged;
 	}
-	
-	
+
 	/**
-	 * Use this to check, if this entry is a second event taking place
-	 * at the same date as another entry in the calendar it is to be added to.
+	 * Use this to check, if this entry is a second event taking place at the same
+	 * date as another entry in the calendar it is to be added to.
 	 * 
-	 * @return True if so, false if this is enry is a single event at a certain date.
+	 * @return True if so, false if this is enry is a single event at a certain
+	 *         date.
 	 */
 	public boolean thisIsChildOfAnotherEntry() {
 		return isChildOfAnotherEntry;
 	}
 
 	/**
-	 * This must be invoked, if this entry is a second event
-	 * taking place at a certain date.
+	 * This must be invoked, if this entry is a second event taking place at a
+	 * certain date.
 	 */
 	public void thisEntryIsChildOfAnotherEntry() {
-		this.isChildOfAnotherEntry=true;
+		this.isChildOfAnotherEntry = true;
 	}
 
 	/**
